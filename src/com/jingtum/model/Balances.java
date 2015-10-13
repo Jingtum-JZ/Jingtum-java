@@ -1,6 +1,6 @@
 package com.jingtum.model;
 
-public class Balances{
+public class Balances extends JingtumObject{
 	double value;
 	String currency;
 	String counterparty;

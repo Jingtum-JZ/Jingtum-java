@@ -16,7 +16,9 @@ import com.jingtum.exception.ChannelException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -82,11 +84,7 @@ public abstract class APIResource extends JingtumObject {
      * @throws InvalidRequestException
      */
     protected static String formatURL(Class<?> clazz, String parm) throws InvalidRequestException {
-        try {
-            return String.format("%s/%s", classURL(clazz), urlEncode(parm));
-        } catch (UnsupportedEncodingException e) {
-            throw new InvalidRequestException("Unable to encode parameters to " + CHARSET, null, e);
-        }
+       return String.format("%s/%s", classURL(clazz), parm);
     }
     
     /**
@@ -96,50 +94,9 @@ public abstract class APIResource extends JingtumObject {
      * @throws InvalidRequestException
      */
     protected static String formatURL(Class<?> clazz, String address, String parm) throws InvalidRequestException {
-        try {
-            return String.format("%s/%s/%s/%s", classURL(clazz),address, className(clazz),urlEncode(parm));
-        } catch (UnsupportedEncodingException e) {
-            throw new InvalidRequestException("Unable to encode parameters to " + CHARSET, null, e);
-        }
+        return String.format("%s/%s/%s%s", classURL(clazz),address, className(clazz),parm);
     }
-
-    /**
-     * @param clazz
-     * @param id
-     * @return
-     * @throws InvalidRequestException
-     */
-    protected static String instanceURL(Class<?> clazz, String id) throws InvalidRequestException {
-        try {
-            return String.format("%s/%s", classURL(clazz), urlEncode(id));
-        } catch (UnsupportedEncodingException e) {
-            throw new InvalidRequestException("Unable to encode parameters to " + CHARSET, null, e);
-        }
-    }
-    
-    /**
-     * @param str
-     * @return
-     * @throws UnsupportedEncodingException
-     */
-    private static String urlEncode(String str) throws UnsupportedEncodingException {
-        if (str == null) {
-            return null;
-        } else {
-            return URLEncoder.encode(str, CHARSET);
-        }
-    }
-    
-    /**
-     * @param k
-     * @param v
-     * @return
-     * @throws UnsupportedEncodingException
-     */
-    private static String urlEncodePair(String k, String v)
-            throws UnsupportedEncodingException {
-        return String.format("%s=%s", urlEncode(k), urlEncode(v));
-    }
+   
     
     /**
      * @param url
@@ -204,13 +161,16 @@ public abstract class APIResource extends JingtumObject {
 
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", String.format(
-                "application/x-www-form-urlencoded;charset=%s", CHARSET));
+        conn.setRequestProperty("Content-Type", "application/json");
 
         OutputStream output = null;
+        
         try {
-            output = conn.getOutputStream();
-            output.write(query.getBytes(CHARSET));
+        	
+        	output = conn.getOutputStream();
+            output.write(query.getBytes());
+            output.flush();
+            
         } finally {
             if (output != null) {
                 output.close();
@@ -220,103 +180,50 @@ public abstract class APIResource extends JingtumObject {
     }
     
     /**
-     * @param params
-     * @return
-     * @throws UnsupportedEncodingException
-     * @throws InvalidRequestException
-     */
-    private static String createQuery(Map<String, Object> params)
-            throws UnsupportedEncodingException, InvalidRequestException {
-        Map<String, String> flatParams = flattenParams(params);
-        StringBuilder queryStringBuffer = new StringBuilder();
-        for (Map.Entry<String, String> entry : flatParams.entrySet()) {
-            if (queryStringBuffer.length() > 0) {
-                queryStringBuffer.append("&");
-            }
-            queryStringBuffer.append(urlEncodePair(entry.getKey(),
-                    entry.getValue()));
-        }
-        return queryStringBuffer.toString();
-    }
-    
-    /**
-     * @param params
-     * @return
-     * @throws InvalidRequestException
-     */
-    private static Map<String, String> flattenParams(Map<String, Object> params)
-            throws InvalidRequestException {
-        if (params == null) {
-            return new HashMap<String, String>();
-        }
-        Map<String, String> flatParams = new HashMap<String, String>();
-        for (Map.Entry<String, Object> entry : params.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            if (value instanceof Map<?, ?>) {
-                Map<String, Object> flatNestedMap = new HashMap<String, Object>();
-                Map<?, ?> nestedMap = (Map<?, ?>) value;
-                for (Map.Entry<?, ?> nestedEntry : nestedMap.entrySet()) {
-                    flatNestedMap.put(
-                            String.format("%s[%s]", key, nestedEntry.getKey()),
-                            nestedEntry.getValue());
-                }
-                flatParams.putAll(flattenParams(flatNestedMap));
-            } else if (value instanceof ArrayList<?>) {
-                ArrayList<?> ar = (ArrayList<?>) value;
-                Map<String, Object> flatNestedMap = new HashMap<String, Object>();
-                int size = ar.size();
-                for (int i = 0; i < size; i++) {
-                    flatNestedMap.put(String.format("%s[%d]", key, i), ar.get(i));
-                }
-                flatParams.putAll(flattenParams(flatNestedMap));
-            } else if ("".equals(value)) {
-                throw new InvalidRequestException("You cannot set '" + key + "' to an empty string. " +
-                        "We interpret empty strings as null in requests. " +
-                        "You may set '" + key + "' to null to delete the property.",
-                        key, null);
-            } else if (value == null) {
-                flatParams.put(key, "");
-            } else {
-                flatParams.put(key, value.toString());
-            }
-        }
-        return flatParams;
-    }
-    
-/*    // represents Errors returned as JSON
-    private static class ErrorContainer {
-        private APIResource.Error error;
-    }*/
-    
-/*    *//**
     *
-    *//*
+    */
    private static class Error {
-       String type;
+	   String success;
+	   String error_type;
+	   String error;
 
-       String message;
+       public String getSuccess() {
+		return success;
+	}
 
-       String code;
+	public void setSuccess(String success) {
+		this.success = success;
+	}
 
-       String param;
+	public String getError_type() {
+		return error_type;
+	}
 
-       @Override
+	public void setError_type(String error_type) {
+		this.error_type = error_type;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
+	@Override
        public String toString() {
            StringBuffer sb = new StringBuffer();
-           if (null != type && !type.isEmpty()) {
-               sb.append("Error type: " + type + "\n");
+           if (null != error_type && !error_type.isEmpty()) {
+               sb.append("Error type: " + error_type + "\n");
            }
-           if (null != message && !message.isEmpty()) {
-               sb.append("\t Error message: " + message + "\n");
-           }
-           if (null != code && !code.isEmpty()) {
-               sb.append("\t Error code: " + code + "\n");
+           if (null != error && !error.isEmpty()) {
+               sb.append("\t Error message: " + error + "\n");
            }
 
            return sb.toString();
        }
-   }*/
+   }
    
    /**
     * @param responseStream
@@ -325,8 +232,6 @@ public abstract class APIResource extends JingtumObject {
     */
    private static String getResponseBody(InputStream responseStream)
            throws IOException {
-       //\A is the beginning of
-       // the stream boundary
        String rBody = new Scanner(responseStream, CHARSET)
                .useDelimiter("\\A")
                .next(); //
@@ -397,20 +302,12 @@ public abstract class APIResource extends JingtumObject {
     * @throws APIConnectionException
     * @throws APIException
     */
-   protected static <T> T request(APIResource.RequestMethod method, String url, Map<String, Object> params, Class<T> clazz) throws AuthenticationException,
+   protected static <T> T request(APIResource.RequestMethod method, String url, String params, Class<T> clazz) throws AuthenticationException,
            InvalidRequestException, APIConnectionException,ChannelException,APIException {
-
-       String query;
-
-       try {
-           query = createQuery(params);
-       } catch (UnsupportedEncodingException e) {
-           throw new InvalidRequestException("Unable to encode parameters to " + CHARSET, null, e);
-       }
 
        JingtumResponse response;
        try {
-           response = makeURLConnectionRequest(method, url, query);
+           response = makeURLConnectionRequest(method, url, params);
        } catch (ClassCastException ce) {
            throw ce;
        }
@@ -418,7 +315,7 @@ public abstract class APIResource extends JingtumObject {
        String rBody = response.getResponseBody();
 
        if (rCode < 200 || rCode >= 300) {
-           handleAPIError(rBody, rCode);
+           handleAPIError(rBody, rCode, params);
        }
        return GSON.fromJson(rBody, clazz);
    }
@@ -432,22 +329,22 @@ public abstract class APIResource extends JingtumObject {
     * @throws AuthenticationException
     * @throws APIException
     */
-   private static void handleAPIError(String rBody, int rCode)
+   private static void handleAPIError(String rBody, int rCode, String query)
            throws InvalidRequestException, AuthenticationException,
            APIException, ChannelException {
-/*       APIResource.Error error = GSON.fromJson(rBody,
-               APIResource.ErrorContainer.class);*/
+       APIResource.Error error = GSON.fromJson(rBody,
+               APIResource.Error.class);
        switch (rCode) {
            case 400:
-               throw new InvalidRequestException(rBody, null, null);
+               throw new InvalidRequestException(error.toString(), query, null);
            case 404:
-               throw new InvalidRequestException(rBody, null, null);
+               throw new InvalidRequestException(error.toString(), query, null);
            case 402:
-               throw new ChannelException(rBody, null, null);
+               throw new ChannelException(error.toString(), query, null);
            case 401:
-               throw new AuthenticationException(rBody);
+               throw new AuthenticationException(error.toString());
            default:
-               throw new APIException(rBody, null);
+               throw new APIException(error.toString(), null);
        }
    }
 }

@@ -17,16 +17,21 @@ import com.jingtum.exception.AuthenticationException;
 import com.jingtum.exception.ChannelException;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Wallet extends APIResource {
 	Boolean success;
 	Mywallet wallet;
-	String address;
-	String secret;
 	long ledger;
 	Boolean validated;
 	BalanceCollection balances;
+	
+	public Wallet (String address, String secret){
+		wallet = new Mywallet();
+		this.wallet.address = address;
+		this.wallet.secret = secret;
+	}
 	
 	private class Mywallet {
 		String address;
@@ -69,48 +74,25 @@ public class Wallet extends APIResource {
 		return ledger;
 	}
 
-	public void setLedger(long ledger) {
-		this.ledger = ledger;
-	}
-
 	public Boolean getValidated() {
 		return validated;
-	}
-
-	public void setValidated(Boolean validated) {
-		this.validated = validated;
 	}
 
 	public BalanceCollection getBalances() {
 		return balances;
 	}
 
-	public void setBalances(BalanceCollection balances) {
-		this.balances = balances;
-	}
-
 	public Boolean getSuccess() {
 		return success;
-	}
-
-	public void setSuccess(Boolean success) {
-		this.success = success;
 	}
 
 	public String getAddress() {
 		return this.wallet.address;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
 
 	public String getSecret() {
 		return this.wallet.secret;
-	}
-
-	public void setSecret(String secret) {
-		this.secret = secret;
 	}
 	
     /**
@@ -136,5 +118,32 @@ public class Wallet extends APIResource {
         Wallet wallet = request(RequestMethod.GET, formatURL(Balances.class,address,""), null, Wallet.class);
         
         return wallet.getBalances();
+    }
+    
+    
+    //仅限于同一银关下的两个帐号间支付同种货币
+    public Payments pay(String receiver, double amount, String currency, String issuer, Boolean validate, String resourceID)
+    		throws AuthenticationException, InvalidRequestException,
+            APIConnectionException, APIException, ChannelException{
+    	
+    	HashMap<String, String> destination_amount = new HashMap<String, String>();  
+    	destination_amount.put("currency", currency);
+    	destination_amount.put("value", Double.toString(amount));    	
+    	destination_amount.put("issuer",issuer); 
+    	
+    	HashMap<String, Object> payment = new HashMap<String, Object>();  
+    	payment.put("source_account", this.getAddress());
+    	payment.put("destination_account", receiver);
+    	payment.put("destination_amount", destination_amount);
+    	
+    	HashMap<String, Object> content = new HashMap<String, Object>();
+    	content.put("secret", this.getSecret());
+    	content.put("client_resource_id", resourceID);
+    	content.put("payment", payment);
+    	
+    	String result = GSON.toJson(content); 
+    	
+    	return request(RequestMethod.POST, formatURL(Payments.class,this.getAddress(),"?validated=" + validate.toString()), result, Payments.class);
+    	
     }
 }
