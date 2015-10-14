@@ -10,6 +10,9 @@ import com.google.gson.JsonParseException;
 
 import com.jingtum.model.Wallet;
 import com.jingtum.model.BalanceCollection;
+import com.jingtum.model.PaymentsCollection;
+import com.jingtum.model.OrdersCollection;
+import com.jingtum.model.OrderBookCollection;
 
 import java.lang.reflect.Type;
 
@@ -18,7 +21,10 @@ public class WalletDeserializer implements JsonDeserializer<Wallet> {
     public Wallet deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).
-                registerTypeAdapter(BalanceCollection.class, new BalanceCollectionDeserializer())
+                registerTypeAdapter(BalanceCollection.class, new BalanceCollectionDeserializer()).
+                registerTypeAdapter(PaymentsCollection.class, new PaymentsCollectionDeserializer()).
+                registerTypeAdapter(OrdersCollection.class, new OrdersCollectionDeserializer()).
+                registerTypeAdapter(OrderBookCollection.class, new OrderBookCollectionDeserializer())
                 .create();
 
         Wallet wallet = gson.fromJson(json, Wallet.class);

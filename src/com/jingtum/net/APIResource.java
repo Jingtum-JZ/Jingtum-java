@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder;
 
 import com.jingtum.Jingtum;
 import com.jingtum.model.JingtumObject;
+import com.jingtum.model.OrderBookResult;
+import com.jingtum.model.PaymentsCollection;
 import com.jingtum.model.Wallet;
 import com.jingtum.exception.APIConnectionException;
 import com.jingtum.exception.InvalidRequestException;
@@ -42,7 +44,7 @@ public abstract class APIResource extends JingtumObject {
      * Http request method
      */
     protected enum RequestMethod {
-        GET, POST
+        GET, POST, DELETE
     }
     
     /**
@@ -51,6 +53,8 @@ public abstract class APIResource extends JingtumObject {
     public static final Gson GSON = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .registerTypeAdapter(Wallet.class, new WalletDeserializer())
+            .registerTypeAdapter(OrderBookResult.class, new OrderBookResultDeserializer())
+            .registerTypeAdapter(PaymentsCollection.class, new PaymentsCollectionDeserializer())
             .create();
     
     /**
@@ -59,6 +63,9 @@ public abstract class APIResource extends JingtumObject {
      */
     private static String className(Class<?> clazz) {
         String className = clazz.getSimpleName().toLowerCase().replace("$", " ");
+        if (className.equals("orderbook")){
+        	className = "order_book";
+        }
         return className;
     }
 
@@ -147,7 +154,7 @@ public abstract class APIResource extends JingtumObject {
 
         return conn;
     }
-
+    
     /**
      * @param url
      * @param query
@@ -155,12 +162,12 @@ public abstract class APIResource extends JingtumObject {
      * @throws IOException
      * @throws APIConnectionException
      */
-    private static java.net.HttpURLConnection createPostConnection(
-            String url, String query) throws IOException, APIConnectionException {
+    private static java.net.HttpURLConnection createPostDeleteConnection(
+            String url, String query, APIResource.RequestMethod method) throws IOException, APIConnectionException {
         java.net.HttpURLConnection conn = createJingtumConnection(url);
 
         conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
+        conn.setRequestMethod(method.toString());
         conn.setRequestProperty("Content-Type", "application/json");
 
         OutputStream output = null;
@@ -186,8 +193,18 @@ public abstract class APIResource extends JingtumObject {
 	   String success;
 	   String error_type;
 	   String error;
+	   String message;
+	   
+	
+    public String getMessage() {
+		return message;
+	}
 
-       public String getSuccess() {
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getSuccess() {
 		return success;
 	}
 
@@ -218,7 +235,7 @@ public abstract class APIResource extends JingtumObject {
                sb.append("Error type: " + error_type + "\n");
            }
            if (null != error && !error.isEmpty()) {
-               sb.append("\t Error message: " + error + "\n");
+               sb.append("\t Error message: " + error + " " + message +"\n");
            }
 
            return sb.toString();
@@ -256,8 +273,11 @@ public abstract class APIResource extends JingtumObject {
                    conn = createGetConnection(url, query);
                    break;
                case POST:
-                   conn = createPostConnection(url, query);
+                   conn = createPostDeleteConnection(url, query, method);
                    break;
+               case DELETE:
+            	   conn = createPostDeleteConnection(url,query, method);
+            	   break;
                default:
                    throw new APIConnectionException(
                            String.format("Unrecognized HTTP method %s. ", method));

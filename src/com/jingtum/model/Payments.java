@@ -12,7 +12,54 @@ public class Payments extends JingtumObject{
 	String error_type;
 	String error;
 	String message;
+	String type;
+	String counterparty;
+	Amount amount;
 	
+	public class Amount{
+		String value;
+		String currency;
+		String issuer;
+		
+		public String getValue() {
+			return value;
+		}
+		public void setValue(String value) {
+			this.value = value;
+		}
+		public String getCurrency() {
+			return currency;
+		}
+		public void setCurrency(String currency) {
+			this.currency = currency;
+		}
+		public String getIssuer() {
+			return issuer;
+		}
+		public void setIssuer(String issuer) {
+			this.issuer = issuer;
+		}
+		
+	}	
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getCounterparty() {
+		return counterparty;
+	}
+	public void setCounterparty(String counterparty) {
+		this.counterparty = counterparty;
+	}
+	public Amount getAmount() {
+		return amount;
+	}
+	public void setAmount(Amount amount) {
+		this.amount = amount;
+	}
 	public Boolean getSuccess() {
 		return success;
 	}

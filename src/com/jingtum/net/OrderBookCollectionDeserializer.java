@@ -8,26 +8,26 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-import com.jingtum.model.BalanceCollection;
-import com.jingtum.model.Balances;
+import com.jingtum.model.OrderBookCollection;
+import com.jingtum.model.OrderBook;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class BalanceCollectionDeserializer implements JsonDeserializer<BalanceCollection> {
+public class OrderBookCollectionDeserializer implements JsonDeserializer<OrderBookCollection> {
 
-    public BalanceCollection deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public OrderBookCollection deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
         if (json.isJsonArray()) {
-            Type balanceListType = new TypeToken<List<Balances>>() {
+            Type orderBookListType = new TypeToken<List<OrderBook>>() {
             }.getType();
-            List<Balances> balances = gson.fromJson(json, balanceListType);
-            BalanceCollection collection = new BalanceCollection();
-            collection.setData(balances);
+            List<OrderBook> orderBook = gson.fromJson(json, orderBookListType);
+            OrderBookCollection collection = new OrderBookCollection();
+            collection.setData(orderBook);
             collection.setHasMore(false);
             return collection;
         }
