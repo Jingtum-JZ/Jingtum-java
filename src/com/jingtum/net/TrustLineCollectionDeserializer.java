@@ -8,26 +8,26 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-import com.jingtum.model.BalanceCollection;
-import com.jingtum.model.Balance;
+import com.jingtum.model.TrustLineCollection;
+import com.jingtum.model.TrustLine;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class BalanceCollectionDeserializer implements JsonDeserializer<BalanceCollection> {
+public class TrustLineCollectionDeserializer implements JsonDeserializer<TrustLineCollection> {
 
-    public BalanceCollection deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public TrustLineCollection deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
         if (json.isJsonArray()) {
-            Type balanceListType = new TypeToken<List<Balance>>() {
+            Type trustLineListType = new TypeToken<List<TrustLine>>() {
             }.getType();
-            List<Balance> balance = gson.fromJson(json, balanceListType);
-            BalanceCollection collection = new BalanceCollection();
-            collection.setData(balance);
+            List<TrustLine> trustLine = gson.fromJson(json, trustLineListType);
+            TrustLineCollection collection = new TrustLineCollection();
+            collection.setData(trustLine);
             collection.setHasMore(false);
             return collection;
         }

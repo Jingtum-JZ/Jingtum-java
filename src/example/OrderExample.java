@@ -2,23 +2,19 @@ package example;
 
 import java.util.Iterator;
 
-import com.jingtum.Jingtum;
 import com.jingtum.exception.APIConnectionException;
 import com.jingtum.exception.APIException;
 import com.jingtum.exception.AuthenticationException;
 import com.jingtum.exception.ChannelException;
 import com.jingtum.exception.InvalidRequestException;
 import com.jingtum.model.Wallet;
-import com.jingtum.model.BalanceCollection;
-import com.jingtum.model.Balances;
 import com.jingtum.model.JingtumCurrency;
 import com.jingtum.model.OrderBook;
 import com.jingtum.model.OrderBookCollection;
 import com.jingtum.model.OrderBookResult;
-import com.jingtum.model.Orders;
-import com.jingtum.model.OrdersCollection;
-import com.jingtum.model.Payments;
-import com.jingtum.model.PaymentsCollection;
+import com.jingtum.model.Order;
+import com.jingtum.model.OrderCollection;
+import com.jingtum.model.PostResult;
 
 public class OrderExample {
 	public static void main(String[] args) throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException, ChannelException {
@@ -35,7 +31,7 @@ public class OrderExample {
 		get.setCounterparty("janxMdrWE2SUzTqRUtfycH4UGewMMeHa9f");
 		get.setCurrency("CNY");
 		get.setValue(2);
-		Orders od = wallet1.putOrder(Orders.OrderType.sell, pay, get, true);
+		PostResult od = wallet1.putOrder(Order.OrderType.sell, pay, get, true);
 		System.out.println(od.getFee());
 		System.out.println(od.getHash());
 		System.out.println(od.getSequence());
@@ -44,23 +40,23 @@ public class OrderExample {
 		
 		System.out.println("---------取消挂单");
 		long sequence = od.getSequence();
-		Orders od_2 = wallet1.cancelOrder(sequence, true);
-		System.out.println(od.getFee());
-		System.out.println(od.getHash());
-		System.out.println(od.getSequence());
-		System.out.println(od.getState());
-		System.out.println(od.getSuccess());
+		PostResult od2 = wallet1.cancelOrder(sequence, true);
+		System.out.println(od2.getFee());
+		System.out.println(od2.getHash());
+		System.out.println(od2.getSequence());
+		System.out.println(od2.getState());
+		System.out.println(od2.getSuccess());
 		
 		System.out.println("---------获取全部挂单");
 		Wallet wallet2 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","snqFcHzRe22JTM8j7iZVpQYzxEEbW");
-		OrdersCollection oc = wallet2.getOrders();
-		Orders od_3;
+		OrderCollection oc = wallet2.getOrders();
+		Order od_3;
 		Iterator it_3 = oc.getData().iterator();
 		Integer k = 0;
 		while(it_3.hasNext())
 		{			
 			k++;
-		    od_3 = (Orders)it_3.next();
+		    od_3 = (Order)it_3.next();
 		    System.out.println("---------Order #" + k);
 			System.out.println(od_3.getType());
 			System.out.println(od_3.getSequence());
@@ -83,9 +79,9 @@ public class OrderExample {
 		get2.setCounterparty("janxMdrWE2SUzTqRUtfycH4UGewMMeHa9f");
 		get2.setCurrency("CNY");
 		get2.setValue(2);
-		Orders od_4 = wallet3.putOrder(Orders.OrderType.sell, pay2, get2, true);
+		PostResult od_4 = wallet3.putOrder(Order.OrderType.sell, pay2, get2, true);
 		
-		Orders od_5 = wallet3.getOrderByHash(od_4.getHash());
+		Order od_5 = wallet3.getOrderByHash(od_4.getHash());
 		System.out.println(od_5.getSuccess());
 		System.out.println(od_5.getHash());
 		System.out.println(od_5.getValidated());
@@ -175,6 +171,8 @@ public class OrderExample {
 			System.out.println(ob.getTaker_pays_total().getCounterparty());
 			System.out.println(ob.getTaker_pays_total().getValue());
 		}
+		
+		System.out.println("---------end");
 		
 	}
 }

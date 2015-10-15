@@ -8,26 +8,29 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-import com.jingtum.model.BalanceCollection;
-import com.jingtum.model.Balance;
+import com.jingtum.model.PaymentCollection;
+import com.jingtum.model.EffectCollection;
+import com.jingtum.model.Payment;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class BalanceCollectionDeserializer implements JsonDeserializer<BalanceCollection> {
+public class PaymentCollectionDeserializer implements JsonDeserializer<PaymentCollection> {
 
-    public BalanceCollection deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public PaymentCollection deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .registerTypeAdapter(Payment.class, new PaymentDeserializer())
+                .registerTypeAdapter(EffectCollection.class, new EffectCollectionDeserializer())
                 .create();
 
         if (json.isJsonArray()) {
-            Type balanceListType = new TypeToken<List<Balance>>() {
+            Type paymentListType = new TypeToken<List<Payment>>() {
             }.getType();
-            List<Balance> balance = gson.fromJson(json, balanceListType);
-            BalanceCollection collection = new BalanceCollection();
-            collection.setData(balance);
+            List<Payment> payment = gson.fromJson(json, paymentListType);
+            PaymentCollection collection = new PaymentCollection();
+            collection.setData(payment);
             collection.setHasMore(false);
             return collection;
         }

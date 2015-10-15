@@ -1,17 +1,10 @@
 package com.jingtum.model;
 
-public class JingtumCurrency extends JingtumObject{
+public class Balance extends JingtumObject{
 	double value;
 	String currency;
 	String counterparty;
-	String issuer;	
 	
-	public String getIssuer() {
-		return issuer;
-	}
-	public void setIssuer(String issuer) {
-		this.issuer = issuer;
-	}
 	public double getValue() {
 		return value;
 	}
@@ -31,4 +24,3 @@ public class JingtumCurrency extends JingtumObject{
 		this.counterparty = counterparty;
 	}
 }
-

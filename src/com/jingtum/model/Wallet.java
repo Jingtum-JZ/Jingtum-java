@@ -18,7 +18,6 @@ import com.jingtum.exception.ChannelException;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Wallet extends APIResource {
 	Boolean success;
@@ -26,41 +25,36 @@ public class Wallet extends APIResource {
 	long ledger;
 	Boolean validated;
 	BalanceCollection balances;
-	PaymentsCollection payments;
-	OrdersCollection orders;
-	OrderBookResult orderBookResult;
-		
-	private OrderBookResult getOrderBookResult() {
-		return orderBookResult;
+	PaymentCollection payments;
+	OrderCollection orders;
+	TrustLineCollection trustlines;
+	Notification notification;
+	TransactionCollection transactions;
+	Transaction transaction;	
+	
+	private Transaction getTransaction() {
+		return transaction;
 	}
 
-/*	public void setOrderBookResult(OrderBookResult orderBookResult) {
-		this.orderBookResult = orderBookResult;
-	}*/
+	private TransactionCollection getMyTransactionCollection(){
+		return this.transactions;
+	}
+	
+	private Notification getMyNotification(){
+		return notification;
+	}
+	
+	private TrustLineCollection getTrustLinesCollection() {
+		return trustlines;
+	}
 
-/*	public void setSuccess(Boolean success) {
-		this.success = success;
-	}*/
-
-/*	public void setValidated(Boolean validated) {
-		this.validated = validated;
-	}*/
-
-	private OrdersCollection getOrdersCollection() {
+	private OrderCollection getOrdersCollection() {
 		return orders;
 	}
 
-/*	private void setOrdersCollection(OrdersCollection orders) {
-		this.orders = orders;
-	}*/
-
-	private PaymentsCollection getPaymentsCollection() {
+	private PaymentCollection getPaymentsCollection() {
 		return payments;
 	}
-
-/*	private void setPaymentsCollection(PaymentsCollection paymentsCollection) {
-		this.payments = paymentsCollection;
-	}*/
 
 	public Wallet (String address, String secret){
 		wallet = new Mywallet();
@@ -71,22 +65,6 @@ public class Wallet extends APIResource {
 	private class Mywallet {
 		String address;
 		String secret;
-		
-		private String getAddress() {
-			return address;
-		}
-
-		private void setAddress(String address) {
-			this.address = address;
-		}
-
-		private String getSecret() {
-			return secret;
-		}
-
-		private void setSecret(String secret) {
-			this.secret = secret;
-		}
 	}
 	
     public static final Gson PRETTY_PRINT_GSON = new GsonBuilder().
@@ -142,21 +120,18 @@ public class Wallet extends APIResource {
     public static Wallet create()
             throws AuthenticationException, InvalidRequestException,
             APIConnectionException, APIException, ChannelException {
-        return request(RequestMethod.GET, formatURL(Wallet.class,"new"), null, Wallet.class);
+        return request(RequestMethod.GET, formatURL("wallet/new"), null, Wallet.class);
     }
     
     public static BalanceCollection balance(String address)
             throws AuthenticationException, InvalidRequestException,
             APIConnectionException, APIException, ChannelException {
-
-        Wallet wallet = request(RequestMethod.GET, formatURL(Balances.class,address,""), null, Wallet.class);
-        
-        return wallet.getBalances();
+       return request(RequestMethod.GET, formatURL(Balance.class,address,""), null, Wallet.class).getBalances();
     }
     
     
     //仅限于同一银关下的两个帐号间支付同种货币
-    public Payments pay(String receiver, JingtumCurrency pay, Boolean validate, String resourceID)
+    public PostResult pay(String receiver, JingtumCurrency pay, Boolean validate, String resourceID)
     		throws AuthenticationException, InvalidRequestException,
             APIConnectionException, APIException, ChannelException{
     	
@@ -177,23 +152,22 @@ public class Wallet extends APIResource {
     	
     	String params = GSON.toJson(content); 
     	
-    	return request(RequestMethod.POST, formatURL(Payments.class,this.getAddress(),"?validated=" + validate.toString()), params, Payments.class);
+    	return request(RequestMethod.POST, formatURL(Payment.class,this.getAddress(),"?validated=" + validate.toString()), params, PostResult.class);
     	
     }
     
-    public Payments getPaymentByID(String id)throws AuthenticationException, InvalidRequestException,
+    public Payment getPaymentByID(String id)throws AuthenticationException, InvalidRequestException,
             APIConnectionException, APIException, ChannelException{
-    	return request(RequestMethod.GET, formatURL(Payments.class,this.getAddress(),"/" + id), null, Payments.class);
+    	return request(RequestMethod.GET, formatURL(Payment.class,this.getAddress(),"/" + id), null, Payment.class);
     }
     
-    public PaymentsCollection getPayments()throws AuthenticationException, InvalidRequestException,
+    public PaymentCollection getPayments()throws AuthenticationException, InvalidRequestException,
     		APIConnectionException, APIException, ChannelException{
-    	 Wallet wallet = request(RequestMethod.GET, formatURL(Payments.class,this.getAddress(),""), null, Wallet.class);
-    	 return wallet.getPaymentsCollection();
+    	 return request(RequestMethod.GET, formatURL(Payment.class,this.getAddress(),""), null, Wallet.class).getPaymentsCollection();
     }
     
-    public Orders putOrder(Orders.OrderType orderType, JingtumCurrency pay, JingtumCurrency get, Boolean validate)throws AuthenticationException, InvalidRequestException,
-	APIConnectionException, APIException, ChannelException{
+    public PostResult putOrder(Order.OrderType orderType, JingtumCurrency pay, JingtumCurrency get, Boolean validate)throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException, ChannelException{
 
     	HashMap<String, String> taker_pays = new HashMap<String, String>(); 
     	taker_pays.put("currency", get.getCurrency());
@@ -216,35 +190,91 @@ public class Wallet extends APIResource {
     	
     	String params = GSON.toJson(content); 
     	
-    	return request(RequestMethod.POST, formatURL(Orders.class,this.getAddress(),"?validated=" + validate.toString()), params, Orders.class);
+    	return request(RequestMethod.POST, formatURL(Order.class,this.getAddress(),"?validated=" + validate.toString()), params, PostResult.class);
     }
     
-    public Orders cancelOrder(long sequence, Boolean validate)throws AuthenticationException, InvalidRequestException,
-	APIConnectionException, APIException, ChannelException{
+    public PostResult cancelOrder(long sequence, Boolean validate)throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException, ChannelException{
     	
     	HashMap<String, Object> content = new HashMap<String, Object>();
     	content.put("secret", this.getSecret());
     	
     	String params = GSON.toJson(content); 
     	
-    	return request(RequestMethod.DELETE, formatURL(Orders.class,this.getAddress(),"/" + Long.toString(sequence) + "?validated=" + validate.toString()), params, Orders.class);
+    	return request(RequestMethod.DELETE, formatURL(Order.class,this.getAddress(),"/" + Long.toString(sequence) + "?validated=" + validate.toString()), params, PostResult.class);
     }
     
-    public OrdersCollection getOrders()throws AuthenticationException, InvalidRequestException,
-			APIConnectionException, APIException, ChannelException{
-    	Wallet wallet = request(RequestMethod.GET, formatURL(Orders.class,this.getAddress(),""), null, Wallet.class);
-    	return wallet.getOrdersCollection();
+    public OrderCollection getOrders()throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException, ChannelException{    	
+    	return request(RequestMethod.GET, formatURL(Order.class,this.getAddress(),""), null, Wallet.class).getOrdersCollection();
     }
     
-    public Orders getOrderByHash(String hash)throws AuthenticationException, InvalidRequestException,
+    public Order getOrderByHash(String hash)throws AuthenticationException, InvalidRequestException,
     		APIConnectionException, APIException, ChannelException{
-    	return request(RequestMethod.GET, formatURL(Orders.class,this.getAddress(),"/" + hash), null, Orders.class);
+    	return request(RequestMethod.GET, formatURL(Order.class,this.getAddress(),"/" + hash), null, Order.class);
     }
     
     public OrderBookResult getOrderBook( JingtumCurrency base, JingtumCurrency counter)throws AuthenticationException, InvalidRequestException,
 			APIConnectionException, APIException, ChannelException{
     	String orderBook = "/" + base.getCurrency() + "+" + base.getCounterparty() + "/" + counter.getCurrency() + "+" + counter.getCounterparty();
     	return request(RequestMethod.GET, formatURL(OrderBook.class,this.getAddress(),orderBook), null, OrderBookResult.class);
+    }
+    
+    public TrustLineCollection getTrustLine()throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException, ChannelException{
+    	return request(RequestMethod.GET, formatURL(TrustLine.class,this.getAddress(),""), null, Wallet.class).getTrustLinesCollection();
+    }
+    
+    public PostResult addTrustLine(TrustLine trustLine, Boolean validate)throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException, ChannelException{
+    	HashMap<String, String> trustline = new HashMap<String, String>();
+    	trustline.put("limit", trustLine.getLimit());
+    	trustline.put("currency", trustLine.getCurrency());
+    	trustline.put("counterparty", trustLine.getCounterparty());
+    	
+    	HashMap<String, Object> content = new HashMap<String, Object>();
+    	content.put("secret", this.getSecret());
+    	content.put("trustline", trustline);
+    	
+    	String params = GSON.toJson(content); 
+    	
+    	return request(RequestMethod.POST, formatURL(TrustLine.class,this.getAddress(),"?validated=" + validate.toString()), params, PostResult.class);
+    }
+    
+    public Notification getNotification(String ID)throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException, ChannelException{
+    	return request(RequestMethod.GET, formatURL(Notification.class,this.getAddress(),"/" + ID), null, Wallet.class).getMyNotification();
+    }
+    
+    public TransactionCollection getTransactions(String destinationAccount, Boolean excludeFailed, Transaction.DirectionType direction)throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException, ChannelException{
+    	String param = "";
+    	if (destinationAccount != "" || direction != Transaction.DirectionType.all || excludeFailed){
+    		param = "?";
+    		if(excludeFailed){
+    			param = param + "exclude_failed=" + excludeFailed;
+    		}
+    		
+    		if(destinationAccount != ""){
+    			if (!param.equals("?")){
+    				param = param + "&";
+    			}
+    			param = param + "destination_account=" + destinationAccount;
+    		}
+    		
+    		if(direction != Transaction.DirectionType.all){
+    			if (!param.equals("?")){
+    				param = param + "&";
+    			}
+    			param = param + "direction=" + direction;
+    		}
+    	}
+    	return request(RequestMethod.GET, formatURL(Transaction.class,this.getAddress(),param), null, Wallet.class).getMyTransactionCollection();
+    }
+    
+    public Transaction getTransactionByHash(String hash)throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException, ChannelException{
+    	return request(RequestMethod.GET, formatURL(Transaction.class,this.getAddress(),"/" + hash), null, Wallet.class).getTransaction();
     }
 }
 

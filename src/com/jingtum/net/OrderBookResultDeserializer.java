@@ -16,9 +16,9 @@ public class OrderBookResultDeserializer implements JsonDeserializer<OrderBookRe
     @Override
     public OrderBookResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).
-        		registerTypeAdapter(OrderBookCollection.class, new OrderBookCollectionDeserializer()).
-        		create();
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        		.registerTypeAdapter(OrderBookCollection.class, new OrderBookCollectionDeserializer())
+        		.create();
 
         OrderBookResult orderBookResult = gson.fromJson(json, OrderBookResult.class);
 

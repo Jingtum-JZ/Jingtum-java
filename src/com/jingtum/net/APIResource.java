@@ -5,9 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import com.jingtum.Jingtum;
+import com.jingtum.model.EffectCollection;
 import com.jingtum.model.JingtumObject;
 import com.jingtum.model.OrderBookResult;
-import com.jingtum.model.PaymentsCollection;
+import com.jingtum.model.PaymentCollection;
 import com.jingtum.model.Wallet;
 import com.jingtum.exception.APIConnectionException;
 import com.jingtum.exception.InvalidRequestException;
@@ -18,13 +19,7 @@ import com.jingtum.exception.ChannelException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -54,7 +49,8 @@ public abstract class APIResource extends JingtumObject {
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .registerTypeAdapter(Wallet.class, new WalletDeserializer())
             .registerTypeAdapter(OrderBookResult.class, new OrderBookResultDeserializer())
-            .registerTypeAdapter(PaymentsCollection.class, new PaymentsCollectionDeserializer())
+            .registerTypeAdapter(PaymentCollection.class, new PaymentCollectionDeserializer())
+            .registerTypeAdapter(EffectCollection.class, new EffectCollectionDeserializer())
             .create();
     
     /**
@@ -66,6 +62,9 @@ public abstract class APIResource extends JingtumObject {
         if (className.equals("orderbook")){
         	className = "order_book";
         }
+        else {
+        	className = className + "s";
+        }
         return className;
     }
 
@@ -73,14 +72,12 @@ public abstract class APIResource extends JingtumObject {
      * @param clazz
      * @return
      */
-    protected static String classURL(Class<?> clazz) {
-    	String className = className(clazz);
-        if (className.equals("wallet")) {
-        	return String.format("%s/v1/%s", Jingtum.getApiBase(), className);
-        } else {
-        	return String.format("%s/v1/%s", Jingtum.getApiBase(), "accounts");
-        } 
-        
+    protected static String classURL() {
+        return String.format("%s/v1/%s", Jingtum.getApiBase(), "accounts");
+    }
+    
+    protected static String formatURL(String param){
+    	return String.format("%s/v1/%s", Jingtum.getApiBase(), param);
     }
 
     
@@ -90,8 +87,8 @@ public abstract class APIResource extends JingtumObject {
      * @return
      * @throws InvalidRequestException
      */
-    protected static String formatURL(Class<?> clazz, String parm) throws InvalidRequestException {
-       return String.format("%s/%s", classURL(clazz), parm);
+    protected static String formatURL(Class<?> clazz, String param) throws InvalidRequestException {
+       return String.format("%s/%s", classURL(), param);
     }
     
     /**
@@ -101,7 +98,7 @@ public abstract class APIResource extends JingtumObject {
      * @throws InvalidRequestException
      */
     protected static String formatURL(Class<?> clazz, String address, String parm) throws InvalidRequestException {
-        return String.format("%s/%s/%s%s", classURL(clazz),address, className(clazz),parm);
+        return String.format("%s/%s/%s%s", classURL(), address, className(clazz),parm);
     }
    
     
@@ -190,44 +187,10 @@ public abstract class APIResource extends JingtumObject {
     *
     */
    private static class Error {
-	   String success;
 	   String error_type;
 	   String error;
 	   String message;
 	   
-	
-    public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public String getSuccess() {
-		return success;
-	}
-
-	public void setSuccess(String success) {
-		this.success = success;
-	}
-
-	public String getError_type() {
-		return error_type;
-	}
-
-	public void setError_type(String error_type) {
-		this.error_type = error_type;
-	}
-
-	public String getError() {
-		return error;
-	}
-
-	public void setError(String error) {
-		this.error = error;
-	}
-
 	@Override
        public String toString() {
            StringBuffer sb = new StringBuffer();
@@ -352,19 +315,27 @@ public abstract class APIResource extends JingtumObject {
    private static void handleAPIError(String rBody, int rCode, String query)
            throws InvalidRequestException, AuthenticationException,
            APIException, ChannelException {
-       APIResource.Error error = GSON.fromJson(rBody,
-               APIResource.Error.class);
+	   APIResource.Error error;
+	   
        switch (rCode) {
            case 400:
+        	   error = GSON.fromJson(rBody,
+                       APIResource.Error.class);
                throw new InvalidRequestException(error.toString(), query, null);
            case 404:
+        	   error = GSON.fromJson(rBody,
+                       APIResource.Error.class);
                throw new InvalidRequestException(error.toString(), query, null);
            case 402:
+        	   error = GSON.fromJson(rBody,
+                       APIResource.Error.class);
                throw new ChannelException(error.toString(), query, null);
            case 401:
+        	   error = GSON.fromJson(rBody,
+                       APIResource.Error.class);
                throw new AuthenticationException(error.toString());
            default:
-               throw new APIException(error.toString(), null);
+               throw new APIException(rBody.toString(),null);
        }
    }
 }
