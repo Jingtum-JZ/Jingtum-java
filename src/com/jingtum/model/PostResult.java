@@ -1,5 +1,9 @@
 package com.jingtum.model;
-
+/**
+ * post request result class
+ * @author jzhao
+ *
+ */
 public class PostResult extends JingtumObject {
 	Boolean success;
 	String client_resource_id;
@@ -9,55 +13,52 @@ public class PostResult extends JingtumObject {
 	long date;
 	double fee;
 	long sequence;
+	/**
+	 * @return true if request is successful
+	 */
 	public Boolean getSuccess() {
 		return success;
 	}
-	public void setSuccess(Boolean success) {
-		this.success = success;
-	}
+	/**
+	 * @return resource id
+	 */
 	public String getClient_resource_id() {
 		return client_resource_id;
 	}
-	public void setClient_resource_id(String client_resource_id) {
-		this.client_resource_id = client_resource_id;
-	}
+	/**
+	 * @return hash number
+	 */
 	public String getHash() {
 		return hash;
 	}
-	public void setHash(String hash) {
-		this.hash = hash;
-	}
+	/**
+	 * @return server state
+	 */
 	public String getState() {
 		return state;
 	}
-	public void setState(String state) {
-		this.state = state;
-	}
+	/**
+	 * @return server result, tesSuccess means successful
+	 */
 	public String getResult() {
 		return result;
 	}
-	public void setResult(String result) {
-		this.result = result;
-	}
+	/**
+	 * @return time, in UNIXTIME
+	 */
 	public long getDate() {
 		return date;
 	}
-	public void setDate(long date) {
-		this.date = date;
-	}
+	/**
+	 * @return transaction fee, in SWT
+	 */
 	public double getFee() {
 		return fee;
 	}
-	public void setFee(double fee) {
-		this.fee = fee;
-	}
+	/**
+	 * @return sequence number
+	 */
 	public long getSequence() {
 		return sequence;
 	}
-	public void setSequence(long sequence) {
-		this.sequence = sequence;
-	}
-	
-	
-
 }

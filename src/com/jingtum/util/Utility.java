@@ -1,32 +1,47 @@
 package com.jingtum.util;
-
+/**
+ * @author jzhao
+ * @version 1.0
+ * @date 2015.10
+ */
 import com.jingtum.exception.APIConnectionException;
 import com.jingtum.exception.APIException;
 import com.jingtum.exception.AuthenticationException;
 import com.jingtum.exception.ChannelException;
 import com.jingtum.exception.InvalidRequestException;
 import com.jingtum.net.APIResource;
-
 public class Utility extends APIResource{
 	Boolean success;
 	Boolean connected;
-	String uuid;
-	
+	String uuid;	
 	private Boolean getConnected(){
 		return this.connected;
 	}
-	
 	private String getMyuuid(){
 		return this.uuid;
-	}
-	
+	}	
+	/**
+	 * @return true if API server is connected
+	 * @throws AuthenticationException
+	 * @throws InvalidRequestException
+	 * @throws APIConnectionException
+	 * @throws APIException
+	 * @throws ChannelException
+	 */
 	public Boolean isConnected()throws AuthenticationException, InvalidRequestException,
-		APIConnectionException, APIException, ChannelException{
-			return request(RequestMethod.GET, formatURL("server/connected"), null, Utility.class).getConnected();
+			APIConnectionException, APIException, ChannelException{
+		return request(RequestMethod.GET, formatURL("server/connected"), null, Utility.class).getConnected();
 	}
-	
+	/**
+	 * @return generated uuid
+	 * @throws AuthenticationException
+	 * @throws InvalidRequestException
+	 * @throws APIConnectionException
+	 * @throws APIException
+	 * @throws ChannelException
+	 */
 	public String getUuid()throws AuthenticationException, InvalidRequestException,
-		APIConnectionException, APIException, ChannelException{
-			return request(RequestMethod.GET, formatURL("uuid"), null, Utility.class).getMyuuid();
-}
+			APIConnectionException, APIException, ChannelException{
+		return request(RequestMethod.GET, formatURL("uuid"), null, Utility.class).getMyuuid();
+	}
 }

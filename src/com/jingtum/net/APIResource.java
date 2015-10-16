@@ -1,9 +1,12 @@
 package com.jingtum.net;
-
+/**
+ * @author jzhao
+ * @version 1.0
+ * @date 2015.10
+ */
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import com.jingtum.Jingtum;
 import com.jingtum.model.EffectCollection;
 import com.jingtum.model.JingtumObject;
@@ -15,16 +18,12 @@ import com.jingtum.exception.InvalidRequestException;
 import com.jingtum.exception.APIException;
 import com.jingtum.exception.AuthenticationException;
 import com.jingtum.exception.ChannelException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import javax.net.ssl.HttpsURLConnection;
-
 /**
  * extends the abstract class when you need request anything from jingtum
  */
@@ -33,15 +32,12 @@ public abstract class APIResource extends JingtumObject {
      * URLEncoder charset
      */
     public static final String CHARSET = "UTF-8";
-
-
     /**
      * Http request method
      */
     protected enum RequestMethod {
         GET, POST, DELETE
-    }
-    
+    }    
     /**
      * Gson object use to transform json string to Jingtum object
      */
@@ -51,11 +47,10 @@ public abstract class APIResource extends JingtumObject {
             .registerTypeAdapter(OrderBookResult.class, new OrderBookResultDeserializer())
             .registerTypeAdapter(PaymentCollection.class, new PaymentCollectionDeserializer())
             .registerTypeAdapter(EffectCollection.class, new EffectCollectionDeserializer())
-            .create();
-    
+            .create();    
     /**
      * @param clazz
-     * @return
+     * @return 
      */
     private static String className(Class<?> clazz) {
         String className = clazz.getSimpleName().toLowerCase().replace("$", " ");
@@ -67,7 +62,6 @@ public abstract class APIResource extends JingtumObject {
         }
         return className;
     }
-
     /**
      * @param clazz
      * @return
@@ -78,9 +72,7 @@ public abstract class APIResource extends JingtumObject {
     
     protected static String formatURL(String param){
     	return String.format("%s/v1/%s", Jingtum.getApiBase(), param);
-    }
-
-    
+    }    
     /**
      * @param clazz
      * @param parm
@@ -89,8 +81,7 @@ public abstract class APIResource extends JingtumObject {
      */
     protected static String formatURL(Class<?> clazz, String param) throws InvalidRequestException {
        return String.format("%s/%s", classURL(), param);
-    }
-    
+    }    
     /**
      * @param clazz
      * @param parm
@@ -99,17 +90,15 @@ public abstract class APIResource extends JingtumObject {
      */
     protected static String formatURL(Class<?> clazz, String address, String parm) throws InvalidRequestException {
         return String.format("%s/%s/%s%s", classURL(), address, className(clazz),parm);
-    }
-   
-    
+    }    
     /**
      * @param url
      * @param 
      * @return
      * @throws IOException
      */
-    private static java.net.HttpURLConnection createJingtumConnection(
-            String url) throws IOException {
+    private static java.net.HttpURLConnection createJingtumConnection(String url) 
+    		throws IOException {
         URL jingtumURL = null;
         jingtumURL = new URL(url);
 
@@ -121,7 +110,6 @@ public abstract class APIResource extends JingtumObject {
 
         return conn;
     }    
-
     /**
      * @param url
      * @param query
@@ -134,8 +122,7 @@ public abstract class APIResource extends JingtumObject {
             String separator = url.contains("?") ? "&" : "?";
             return String.format("%s%s%s", url, separator, query);
         }
-    }
-    
+    }    
     /**
      * @param url
      * @param query
@@ -150,8 +137,7 @@ public abstract class APIResource extends JingtumObject {
         conn.setRequestMethod("GET");
 
         return conn;
-    }
-    
+    }    
     /**
      * @param url
      * @param query
@@ -184,13 +170,12 @@ public abstract class APIResource extends JingtumObject {
     }
     
     /**
-    *
+    * Error class
     */
    private static class Error {
 	   String error_type;
 	   String error;
-	   String message;
-	   
+	   String message;	   
 	@Override
        public String toString() {
            StringBuffer sb = new StringBuffer();
@@ -200,11 +185,9 @@ public abstract class APIResource extends JingtumObject {
            if (null != error && !error.isEmpty()) {
                sb.append("\t Error message: " + error + " " + message +"\n");
            }
-
            return sb.toString();
        }
-   }
-   
+   }   
    /**
     * @param responseStream
     * @return
@@ -214,11 +197,10 @@ public abstract class APIResource extends JingtumObject {
            throws IOException {
        String rBody = new Scanner(responseStream, CHARSET)
                .useDelimiter("\\A")
-               .next(); //
+               .next(); 
        responseStream.close();
        return rBody;
-   }
-   
+   }   
    /**
     * @param method
     * @param url
@@ -248,15 +230,13 @@ public abstract class APIResource extends JingtumObject {
            // trigger the request
            int rCode = conn.getResponseCode();
            String rBody = null;
-           Map<String, List<String>> headers;
 
            if (rCode >= 200 && rCode < 300) {
                rBody = getResponseBody(conn.getInputStream());
            } else {
                rBody = getResponseBody(conn.getErrorStream());
            }
-           headers = conn.getHeaderFields();
-           return new JingtumResponse(rCode, rBody, headers);
+           return new JingtumResponse(rCode, rBody);
 
        } catch (IOException e) {
            throw new APIConnectionException(
@@ -271,8 +251,7 @@ public abstract class APIResource extends JingtumObject {
                conn.disconnect();
            }
        }
-   }
-   
+   }   
    /**
     * @param method
     * @param url
@@ -301,8 +280,7 @@ public abstract class APIResource extends JingtumObject {
            handleAPIError(rBody, rCode, params);
        }
        return GSON.fromJson(rBody, clazz);
-   }
-   
+   }   
    /**
     * 错误处理
     *

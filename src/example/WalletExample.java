@@ -23,11 +23,10 @@ public class WalletExample {
 		Wallet wallet = Wallet.create();
 		System.out.println(wallet.getAddress());
 		System.out.println(wallet.getSecret());
-		System.out.println(wallet.getSuccess());
 		
 		System.out.println("---------获取 Wallet balance");
 		Wallet wallet2 = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf",null);
-		BalanceCollection bc = Wallet.balance(wallet2.getAddress());
+		BalanceCollection bc = Wallet.getBalance(wallet2.getAddress());
 		Balance bl;
 		Iterator it = bc.getData().iterator();
 		Integer i = 0;
