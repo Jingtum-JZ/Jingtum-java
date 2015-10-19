@@ -2,7 +2,7 @@ package com.jingtum.exception;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
+ * Http error code 400 and 404
  */
 public class InvalidRequestException extends JingtumException {
 	private static final long serialVersionUID = 1L;

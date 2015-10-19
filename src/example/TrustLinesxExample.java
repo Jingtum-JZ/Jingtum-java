@@ -18,7 +18,7 @@ public class TrustLinesxExample {
 		TrustLinesxExample trustLinesxExample = new TrustLinesxExample();
 
 		System.out.println("---------获取授信");
-		Wallet wallet1 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","snqFcHzRe22JTM8j7iZVpQYzxEEbW");
+		Wallet wallet1 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","snqFcHzRe22JTM8j7iZVpQYzxEEbW"); //根据地址和密钥生成钱包，如只为获取全部授信，密钥可为空
 		TrustLineCollection tlc = wallet1.getTrustLine();
 		TrustLine tl1;
 		
@@ -28,15 +28,15 @@ public class TrustLinesxExample {
 			i++;
 			tl1 = (TrustLine)it1.next();
 			System.out.println("---------Trust Line #" + i);
-			System.out.println(tl1.getAccount());
-			System.out.println(tl1.getCounterparty());
-			System.out.println(tl1.getCurrency());
-			System.out.println(tl1.getLimit());
+			System.out.println(tl1.getAccount()); //当前账号地址
+			System.out.println(tl1.getCounterparty()); //授信方
+			System.out.println(tl1.getCurrency()); //货币单位
+			System.out.println(tl1.getLimit()); //授信额度
 	
 		}
 		
 		System.out.println("---------增加授信");
-		Wallet wallet2 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","snqFcHzRe22JTM8j7iZVpQYzxEEbW");
+		Wallet wallet2 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","snqFcHzRe22JTM8j7iZVpQYzxEEbW"); //增加授信密钥为必需值，否则提交会失败
 		TrustLine trustline = new TrustLine();
 		trustline.setCounterparty("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf");
 		trustline.setCurrency("USD");

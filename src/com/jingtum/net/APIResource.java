@@ -2,7 +2,6 @@ package com.jingtum.net;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
  */
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -25,7 +24,7 @@ import java.net.URL;
 import java.util.Scanner;
 import javax.net.ssl.HttpsURLConnection;
 /**
- * extends the abstract class when you need request anything from jingtum
+ * Extends the abstract class when you need request anything from jingtum
  */
 public abstract class APIResource extends JingtumObject {
     /**
@@ -33,7 +32,8 @@ public abstract class APIResource extends JingtumObject {
      */
     public static final String CHARSET = "UTF-8";
     /**
-     * Http request method
+     * Http request method:
+     * Get, Post and Delete
      */
     protected enum RequestMethod {
         GET, POST, DELETE
@@ -49,6 +49,7 @@ public abstract class APIResource extends JingtumObject {
             .registerTypeAdapter(EffectCollection.class, new EffectCollectionDeserializer())
             .create();    
     /**
+     * Based on class name to built the string needed in URL
      * @param clazz
      * @return 
      */
@@ -63,7 +64,7 @@ public abstract class APIResource extends JingtumObject {
         return className;
     }
     /**
-     * @param clazz
+     * Built base URL
      * @return
      */
     protected static String classURL() {
@@ -75,7 +76,7 @@ public abstract class APIResource extends JingtumObject {
     }    
     /**
      * @param clazz
-     * @param parm
+     * @param param
      * @return
      * @throws InvalidRequestException
      */
@@ -92,9 +93,9 @@ public abstract class APIResource extends JingtumObject {
         return String.format("%s/%s/%s%s", classURL(), address, className(clazz),parm);
     }    
     /**
+     * Get http connection instance
      * @param url
-     * @param 
-     * @return
+     * @return conn
      * @throws IOException
      */
     private static java.net.HttpURLConnection createJingtumConnection(String url) 
@@ -124,9 +125,10 @@ public abstract class APIResource extends JingtumObject {
         }
     }    
     /**
+     * Get a http Get request connection
      * @param url
      * @param query
-     * @return
+     * @return conn
      * @throws IOException
      * @throws APIConnectionException
      */
@@ -139,9 +141,10 @@ public abstract class APIResource extends JingtumObject {
         return conn;
     }    
     /**
+     * Get a http post/delete connection
      * @param url
      * @param query
-     * @return
+     * @return conn
      * @throws IOException
      * @throws APIConnectionException
      */
@@ -189,8 +192,9 @@ public abstract class APIResource extends JingtumObject {
        }
    }   
    /**
+    * Get the response body, in jason format
     * @param responseStream
-    * @return
+    * @return rBody
     * @throws IOException
     */
    private static String getResponseBody(InputStream responseStream)
@@ -205,7 +209,7 @@ public abstract class APIResource extends JingtumObject {
     * @param method
     * @param url
     * @param query
-    * @return
+    * @return JingtumResponse
     * @throws APIConnectionException
     */
    private static JingtumResponse makeURLConnectionRequest(
@@ -253,12 +257,13 @@ public abstract class APIResource extends JingtumObject {
        }
    }   
    /**
+    * Build class instance from jason format http response
     * @param method
     * @param url
     * @param params
     * @param clazz
     * @param <T>
-    * @return
+    * @return class instance
     * @throws AuthenticationException
     * @throws InvalidRequestException
     * @throws APIConnectionException
@@ -282,8 +287,7 @@ public abstract class APIResource extends JingtumObject {
        return GSON.fromJson(rBody, clazz);
    }   
    /**
-    * 错误处理
-    *
+    * Error handling
     * @param rBody
     * @param rCode
     * @throws InvalidRequestException

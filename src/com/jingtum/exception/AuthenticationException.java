@@ -2,7 +2,7 @@ package com.jingtum.exception;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
+ * Http error code 401
  */
 public class AuthenticationException extends JingtumException {
 	public AuthenticationException(String message) {

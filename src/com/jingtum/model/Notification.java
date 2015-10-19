@@ -2,7 +2,6 @@ package com.jingtum.model;
 /**
  * Notification class
  * @author jzhao
- *
  */
 public class Notification extends JingtumObject {
 	String account;
@@ -15,55 +14,64 @@ public class Notification extends JingtumObject {
 	String previous_hash;
 	String next_hash;	
 	/**
-	 * @return notification related account
+	 * Get notification related account
+	 * @return account
 	 */
 	public String getAccount() {
 		return account;
 	}
 	/**
-	 * @return notification type
+	 * Get notification type
+	 * @return type
 	 */
 	public String getType() {
 		return type;
 	}
 	/**
-	 * @return payment direction, incoming or outgoing
+	 * Get payment direction, incoming or outgoing
+	 * @return direction
 	 */
 	public Transaction.DirectionType getDirection() {
 		return direction;
 	}
 	/**
-	 * @return transaction state
+	 * Get transaction state
+	 * @return state
 	 */
 	public String getState() {
 		return state;
 	}
 	/**
-	 * @return transaction result
+	 * Get transaction result
+	 * @return result
 	 */
 	public String getResult() {
 		return result;
 	}
 	/**
-	 * @return transaction hash value
+	 * Get transaction hash value
+	 * @return hash
 	 */
 	public String getHash() {
 		return hash;
 	}
 	/**
-	 * @return transaction UNIXTIME
+	 * Get transaction time, in UNIXTIME
+	 * @return date
 	 */
 	public long getDate() {
 		return date;
 	}
 	/**
-	 * @return previous transaction URL
+	 * Get previous transaction URL
+	 * @return previous_hash
 	 */
 	public String getPrevious_hash() {
 		return previous_hash;
 	}
 	/**
-	 * @return next transaction URL
+	 * Get next transaction URL
+	 * @return next_hash
 	 */
 	public String getNext_hash() {
 		return next_hash;

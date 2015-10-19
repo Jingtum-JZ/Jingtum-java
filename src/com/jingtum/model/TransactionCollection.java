@@ -2,7 +2,7 @@ package com.jingtum.model;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
+ * Transaction collection class
  */
 public class TransactionCollection extends JingtumCollection<Transaction>{
 }

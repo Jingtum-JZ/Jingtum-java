@@ -2,7 +2,7 @@ package com.jingtum.model;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
+ * Wallet class, main entry point
  */
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -86,7 +86,6 @@ public class Wallet extends APIResource {
 	}	
 	/**
 	 * private wallet class
-	 *
 	 */
 	private class Mywallet {
 		String address;
@@ -108,26 +107,28 @@ public class Wallet extends APIResource {
             }).
             create();
 	/**
-	 * @return private balance collection
+	 * Get private balance collection
+	 * @return balances
 	 */
 	private BalanceCollection getBalances() {
 		return balances;
 	}
 	/**
-	 * @return wallet address
+	 * Get wallet address
+	 * @return address
 	 */
 	public String getAddress() {
 		return this.wallet.address;
 	}
 	/**
-	 * @return wallet secret key
+	 * Get wallet secret key
+	 * @return secret
 	 */
 	public String getSecret() {
 		return this.wallet.secret;
 	}	
     /**
-     * create wallet
-     *
+     * Create a new wallet
      * @return Wallet instance
      * @throws AuthenticationException
      * @throws InvalidRequestException
@@ -141,7 +142,7 @@ public class Wallet extends APIResource {
         return request(RequestMethod.GET, formatURL("wallet/new"), null, Wallet.class);
     }    
     /**
-     * static method to get the balance collection of a given address
+     * Static method to get the balance collection of a given address
      * @param address
      * @return BalanceCollection instance
      * @throws AuthenticationException
@@ -156,7 +157,7 @@ public class Wallet extends APIResource {
        return request(RequestMethod.GET, formatURL(Balance.class,address,""), null, Wallet.class).getBalances();
     }
     /**
-     * post payment
+     * Post payment
      * @param receiver payment receiver
      * @param pay payment amount
      * @param validate true if wait for payment result
@@ -192,7 +193,7 @@ public class Wallet extends APIResource {
     	return request(RequestMethod.POST, formatURL(Payment.class,this.getAddress(),"?validated=" + validate.toString()), params, PostResult.class);    	
     }    
     /**
-     * take hash number or resource ID to get payment information 
+     * Take hash number or resource ID to get payment information 
      * @param id 
      * @return Payment instance
      * @throws AuthenticationException
@@ -218,7 +219,7 @@ public class Wallet extends APIResource {
     	 return request(RequestMethod.GET, formatURL(Payment.class,this.getAddress(),""), null, Wallet.class).getPaymentsCollection();
     }    
     /**
-     * post order request
+     * Post a new order request
      * @param orderType buy or sell
      * @param pay 
      * @param get
@@ -258,7 +259,7 @@ public class Wallet extends APIResource {
     }
     
     /**
-     * cancel a posted order given a order sequence number
+     * Cancel a posted order given a order sequence number
      * @param sequence
      * @param validate
      * @return PostResult instance
@@ -279,7 +280,7 @@ public class Wallet extends APIResource {
     	return request(RequestMethod.DELETE, formatURL(Order.class,this.getAddress(),"/" + Long.toString(sequence) + "?validated=" + validate.toString()), params, PostResult.class);
     }    
     /**
-     * get all orders
+     * Get all orders of a wallet
      * @return OrderCollection instance
      * @throws AuthenticationException
      * @throws InvalidRequestException
@@ -292,7 +293,7 @@ public class Wallet extends APIResource {
     	return request(RequestMethod.GET, formatURL(Order.class,this.getAddress(),""), null, Wallet.class).getOrdersCollection();
     }    
     /**
-     * get order by hash number
+     * Get order by hash number
      * @param hash
      * @return Order instance
      * @throws AuthenticationException
@@ -306,7 +307,7 @@ public class Wallet extends APIResource {
     	return request(RequestMethod.GET, formatURL(Order.class,this.getAddress(),"/" + hash), null, Order.class);
     }    
     /**
-     * get order book
+     * Get order book
      * @param base
      * @param counter
      * @return
@@ -322,7 +323,7 @@ public class Wallet extends APIResource {
     	return request(RequestMethod.GET, formatURL(OrderBook.class,this.getAddress(),orderBook), null, OrderBookResult.class);
     }    
     /**
-     * get all trustlines
+     * Get all trust lines
      * @return TrustLineCollection instance
      * @throws AuthenticationException
      * @throws InvalidRequestException
@@ -335,7 +336,7 @@ public class Wallet extends APIResource {
     	return request(RequestMethod.GET, formatURL(TrustLine.class,this.getAddress(),""), null, Wallet.class).getTrustLinesCollection();
     }    
     /**
-     * add trust line
+     * Add a new trust line
      * @param trustLine
      * @param validate
      * @return PostResult instance
@@ -361,8 +362,9 @@ public class Wallet extends APIResource {
     	return request(RequestMethod.POST, formatURL(TrustLine.class,this.getAddress(),"?validated=" + validate.toString()), params, PostResult.class);
     }    
     /**
+     * Get notification
      * @param ID
-     * @return
+     * @return Notification instance
      * @throws AuthenticationException
      * @throws InvalidRequestException
      * @throws APIConnectionException
@@ -374,7 +376,7 @@ public class Wallet extends APIResource {
     	return request(RequestMethod.GET, formatURL(Notification.class,this.getAddress(),"/" + ID), null, Wallet.class).getMyNotification();
     }    
     /**
-     * get transaction info
+     * Get transaction info
      * @param destinationAccount
      * @param excludeFailed
      * @param direction
@@ -409,7 +411,7 @@ public class Wallet extends APIResource {
     	return request(RequestMethod.GET, formatURL(Transaction.class,this.getAddress(),param), null, Wallet.class).getMyTransactionCollection();
     }    
     /**
-     * get transaction by hash number
+     * Get transaction by hash number
      * @param hash
      * @return Transaction instance
      * @throws AuthenticationException

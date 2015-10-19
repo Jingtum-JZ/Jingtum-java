@@ -2,7 +2,6 @@ package com.jingtum.model;
 /** * 
  * @author jzhao
  * @version 1.0
- * @date 2015.10
  */
 public class Transaction extends JingtumObject{
 	long date;
@@ -15,7 +14,10 @@ public class Transaction extends JingtumObject{
 	JingtumCurrency amount;
 	EffectCollection effects;
 	/**
-	 * transaction type
+	 * Transaction type:
+	 *  sent, received, trusted, trusting,
+	 *	convert, offernew, offercancel, offereffect,
+	 *	accountset, jingtuming, failed
 	 *
 	 */
 	public enum TranType{
@@ -24,62 +26,72 @@ public class Transaction extends JingtumObject{
 		accountset, jingtuming, failed
 	}	
 	/**
-	 * direction type, incoming, outgoing
+	 * Direction type:
+	 * incoming, outgoing
 	 *
 	 */
 	public enum DirectionType{
 		incoming, outgoing, all
 	}
 	/**
-	 * @return date, in UINIXTIME
+	 * Get date, in UNIXTIME
+	 * @return date
 	 */
 	public long getDate() {
 		return date;
 	}
 	/**
-	 * @return hash number
+	 * Get hash number
+	 * @return hash
 	 */
 	public String getHash() {
 		return hash;
 	}
 	/**
-	 * @return transaction type
+	 * Get transaction type
+	 * @return type
 	 */
 	public TranType getType() {
 		return type;
 	}
 	/**
-	 * @return transaction fee, in SWT
+	 * Get transaction fee, in SWT
+	 * @return fee
 	 */
 	public String getFee() {
 		return fee;
 	}
 	/**
-	 * @return server result
+	 * Get server result
+	 * @return result
 	 */
 	public String getResult() {
 		return result;
 	}
 	/**
-	 * @return resource id
+	 * Get resource id
+	 * @return client_resource_id
 	 */
 	public String getClient_resource_id() {
 		return client_resource_id;
 	}
 	/**
-	 * @return transaction counter pary
+	 * Get transaction counter party
+	 * @return counterparty
 	 */
 	public String getCounterparty() {
 		return counterparty;
 	}
 	/**
-	 * @return transaction amount
+	 * Get transaction amount
+	 * @return amount
 	 */
 	public JingtumCurrency getAmount() {
 		return amount;
 	}
 	/**
-	 * @return transaction effect collection
+	 * Get transaction effect collection
+	 * @return effects
 	 */
 	public EffectCollection getEffects() {
 		return effects;

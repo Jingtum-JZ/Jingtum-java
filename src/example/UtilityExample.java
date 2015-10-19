@@ -15,8 +15,8 @@ public class UtilityExample {
 		System.out.println("---------获取 server连接信息");
 		System.out.println(util.isConnected());
 		
-		System.out.println("---------获取 uuid");
-		System.out.println(util.getUuid());
+		System.out.println("---------获取 uuid"); 
+		System.out.println(util.getUuid()); //生成uuid，用于提交支付是的资源号
 		
 		System.out.println("---------end");
 	}

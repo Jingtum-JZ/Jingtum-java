@@ -2,7 +2,6 @@ package com.jingtum.model;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
  */
 public class Payment extends JingtumObject{	
 	Boolean success;
@@ -21,67 +20,78 @@ public class Payment extends JingtumObject{
 		validated, failed
 	}
 	/**
-	 * @return payment effect effect collection
+	 * Get payment effect effect collection
+	 * @return effects
 	 */
 	public EffectCollection getEffects() {
 		return effects;
 	}
 	/**
-	 * @return payment type
+	 * Get payment type
+	 * @return type
 	 */
 	public String getType() {
 		return type;
 	}
 	/**
-	 * @return currency counter party
+	 * Get currency counter party
+	 * @return counterparty
 	 */
 	public String getCounterparty() {
 		return counterparty;
 	}
 	/**
-	 * @return payment amount
+	 * Get payment amount
+	 * @return amount
 	 */
 	public JingtumCurrency getAmount() {
 		return amount;
 	}
 	/**
-	 * @return true if reques is successful
+	 * Return true if request is successful
+	 * @return success
 	 */
 	public Boolean getSuccess() {
 		return success;
 	}
 	/**
-	 * @return payment resource id
+	 * Get payment resource id
+	 * @return client_resource_id
 	 */
 	public String getClient_resource_id() {
 		return client_resource_id;
 	}
 	/**
-	 * @return payment hash value
+	 * Get payment hash value
+	 * @return hash
 	 */
 	public String getHash() {
 		return hash;
 	}
 	/**
-	 * @return state type
+	 * Get state type 
+	 * @return state
 	 */
 	public StateType getState() {
 		return state;
 	}
 	/**
-	 * @return server result
+	 * Get server result
+	 * @return result
 	 */
 	public String getResult() {
 		return result;
 	}
 	/**
-	 * @return payment time, in UNIXTIME
+	 * Get payment time, in UNIXTIME
+	 * @return date
 	 */
 	public long getDate() {
 		return date;
 	}
 	/**
-	 * @return payment transaction fee, in SWT
+	 * Get payment transaction fee, in SWT
+	 * @return fee
 	 */
 	public double getFee() {
 		return fee;

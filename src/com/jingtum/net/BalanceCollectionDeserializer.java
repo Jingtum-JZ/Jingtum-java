@@ -2,7 +2,6 @@ package com.jingtum.net;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
  */
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;

@@ -2,7 +2,6 @@ package com.jingtum.util;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
  */
 import com.jingtum.exception.APIConnectionException;
 import com.jingtum.exception.APIException;
@@ -21,7 +20,8 @@ public class Utility extends APIResource{
 		return this.uuid;
 	}	
 	/**
-	 * @return true if API server is connected
+	 * Return true if API server is connected
+	 * @return 
 	 * @throws AuthenticationException
 	 * @throws InvalidRequestException
 	 * @throws APIConnectionException
@@ -33,7 +33,8 @@ public class Utility extends APIResource{
 		return request(RequestMethod.GET, formatURL("server/connected"), null, Utility.class).getConnected();
 	}
 	/**
-	 * @return generated uuid
+	 * Get system generated uuid
+	 * @return generated uuid 
 	 * @throws AuthenticationException
 	 * @throws InvalidRequestException
 	 * @throws APIConnectionException

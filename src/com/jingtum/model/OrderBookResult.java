@@ -1,8 +1,8 @@
 package com.jingtum.model;
 /**
- * order book result class, used in getOrdeBook method
+ * Order book result class, used in getOrdeBook method
  * @author jzhao
- *
+ * @version 1.0
  */
 public class OrderBookResult extends JingtumObject{
 	String order_book;
@@ -11,31 +11,36 @@ public class OrderBookResult extends JingtumObject{
 	OrderBookCollection bids;
 	OrderBookCollection asks;	
 	/**
-	 * @return currency pair in the order. e.g. CNY+jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS/USD+jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS
+	 * Get currency pair in the order. e.g. CNY+jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS/USD+jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS
+	 * @return order_book
 	 */
 	public String getOrderbook() {
 		return order_book;
 	}
 	/**
-	 * @return true if the request is successful
+	 * Return true if the request is successful
+	 * @return success
 	 */
 	public Boolean getSuccess() {
 		return success;
 	}
 	/**
-	 * @return server status
+	 * Return server status
+	 * @return validated
 	 */
 	public Boolean getValidated() {
 		return validated;
 	}
 	/**
-	 * @return bid order book collection
+	 * Get bid order book collection
+	 * @return bids
 	 */
 	public OrderBookCollection getBids() {
 		return bids;
 	}
 	/**
-	 * @return ask order book collection
+	 * Get ask order book collection
+	 * @return asks
 	 */
 	public OrderBookCollection getAsks() {
 		return asks;

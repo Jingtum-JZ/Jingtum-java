@@ -2,7 +2,7 @@ package com.jingtum.exception;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
+ * Base exception class
  */
 public abstract class JingtumException extends Exception {
 	public JingtumException(String message) {

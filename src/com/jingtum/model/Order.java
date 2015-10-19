@@ -2,7 +2,6 @@ package com.jingtum.model;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
  */
 public class Order extends JingtumObject{
 	Boolean success;
@@ -18,12 +17,15 @@ public class Order extends JingtumObject{
 	Transaction.DirectionType direction;
 	String validated;	
 	/**
-	 * Order type, sell or buy
-	 *
+	 * Order type, sell or buy	 *
 	 */
 	public enum OrderType {
         sell, buy
     }	
+	/**
+	 * During to the jason structure returned from Http request, need a private order structure here
+	 *
+	 */
 	private class MyOrder{
 		String account;
 		JingtumCurrency taker_gets;
@@ -51,25 +53,29 @@ public class Order extends JingtumObject{
 		}		
 	}		
 	/**
-	 * @return server state
+	 * Get server state
+	 * @return validated
 	 */
 	public String getValidated() {
 		return validated;
 	}
 	/**
-	 * @return order action type
+	 * Get action type
+	 * @return action
 	 */
 	public String getAction() {
 		return action;
 	}
 	/**
-	 * @return direction type, incoming or outgoing
+	 * Get direction type, incoming or outgoing
+	 * @return direction
 	 */
 	public Transaction.DirectionType getDirection() {
 		return direction;
 	}
 	/**
-	 * @return order account
+	 * Get account
+	 * @return account
 	 */
 	public String getAccount(){
 		if (order != null){
@@ -78,7 +84,8 @@ public class Order extends JingtumObject{
 		return null;
 	}	
 	/**
-	 * @return order type
+	 * Get order type
+	 * @return type
 	 */
 	public OrderType getType() {
 		if (order != null){
@@ -87,7 +94,8 @@ public class Order extends JingtumObject{
 		return type;
 	}
 	/**
-	 * @return amount pays in the order
+	 * Get amount pays in the order
+	 * @return taker_gets
 	 */
 	public JingtumCurrency getPay() {
 		if (this.taker_gets == null && order != null){
@@ -96,7 +104,8 @@ public class Order extends JingtumObject{
 		return taker_gets;
 	}
 	/**
-	 * @return amount receive
+	 * Get amount receive
+	 * @return taker_pays
 	 */
 	public JingtumCurrency getReceive() {
 		if (this.taker_gets == null && order != null){
@@ -105,7 +114,8 @@ public class Order extends JingtumObject{
 		return taker_pays;
 	}
 	/**
-	 * @return passive transaction or not
+	 * Return true if it is passive transaction
+	 * @return passive
 	 */
 	public Boolean getPassive() {
 		if (order != null){
@@ -114,25 +124,29 @@ public class Order extends JingtumObject{
 		return passive;
 	}
 	/**
-	 * @return request status
+	 * Return true if the request is successful
+	 * @return success
 	 */
 	public Boolean getSuccess() {
 		return success;
 	}
 	/**
-	 * @return transaction hash value
+	 * Get transaction hash value
+	 * @return hash
 	 */
 	public String getHash() {
 		return hash;
 	}
 	/**
-	 * @return transaction fee, in SWT
+	 * Get transaction fee, in SWT
+	 * @return fee
 	 */
 	public double getFee() {
 		return fee;
 	}
 	/**
-	 * @return transaction sequence number
+	 * Get transaction sequence number
+	 * @return sequence
 	 */
 	public long getSequence() {
 		if (order != null){

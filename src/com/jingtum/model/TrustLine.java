@@ -2,7 +2,7 @@ package com.jingtum.model;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
+ * Trust line class
  */
 public class TrustLine extends JingtumObject{
 	String account;
@@ -10,25 +10,29 @@ public class TrustLine extends JingtumObject{
 	String currency;
 	String limit;	
 	/**
-	 * @return current account
+	 * Get current account
+	 * @return account
 	 */
 	public String getAccount() {
 		return account;
 	}
 	/**
-	 * @return trusted counter party
+	 * Get trusted counter party
+	 * @return counterparty
 	 */
 	public String getCounterparty() {
 		return counterparty;
 	}
 	/**
-	 * @return trusted currency unit
+	 * Get trusted currency unit
+	 * @return currency
 	 */
 	public String getCurrency() {
 		return currency;
 	}
 	/**
-	 * @return trusted amount limit
+	 * Get trusted amount limit
+	 * @return limit
 	 */
 	public String getLimit() {
 		return limit;
@@ -41,14 +45,14 @@ public class TrustLine extends JingtumObject{
 		this.counterparty = counterparty;
 	}
 	/**
-	 * set trust line currency
+	 * Set trust line currency
 	 * @param currency
 	 */
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
 	/**
-	 * set trust line limit
+	 * Set trust line limit
 	 * @param limit
 	 */
 	public void setLimit(String limit) {

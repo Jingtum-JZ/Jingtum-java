@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder;
  * Jingtum Object base class
  * @author jzhao
  * @version 1.0
- * @date 2015.10
  */
 public abstract class JingtumObject {
     public static final Gson PRETTY_PRINT_GSON = new GsonBuilder().

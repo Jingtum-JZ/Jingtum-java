@@ -2,7 +2,6 @@ package com.jingtum.net;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
  */
 public class JingtumResponse {
     private int responseCode;
@@ -10,7 +9,6 @@ public class JingtumResponse {
     /**
      * @param responseCode
      * @param responseBody
-     * @param responseHeaders
      */
     public JingtumResponse(int responseCode, String responseBody) {
         this.responseCode = responseCode;

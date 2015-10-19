@@ -1,8 +1,8 @@
 package com.jingtum.model;
 /**
- * post request result class
+ * Post request result class
  * @author jzhao
- *
+ * @version 1.0
  */
 public class PostResult extends JingtumObject {
 	Boolean success;
@@ -14,49 +14,57 @@ public class PostResult extends JingtumObject {
 	double fee;
 	long sequence;
 	/**
-	 * @return true if request is successful
+	 * Get true if request is successful
+	 * @return success
 	 */
 	public Boolean getSuccess() {
 		return success;
 	}
 	/**
-	 * @return resource id
+	 * Get resource id
+	 * @return client_resource_id
 	 */
 	public String getClient_resource_id() {
 		return client_resource_id;
 	}
 	/**
-	 * @return hash number
+	 * Get hash number
+	 * @return hash
 	 */
 	public String getHash() {
 		return hash;
 	}
 	/**
-	 * @return server state
+	 * Get server state
+	 * @return state
 	 */
 	public String getState() {
 		return state;
 	}
 	/**
-	 * @return server result, tesSuccess means successful
+	 * Get server result, tesSuccess means successful
+	 * @return result
 	 */
 	public String getResult() {
 		return result;
 	}
 	/**
-	 * @return time, in UNIXTIME
+	 * Get time, in UNIXTIME
+	 * @return date
 	 */
 	public long getDate() {
 		return date;
 	}
 	/**
-	 * @return transaction fee, in SWT
+	 * Get transaction fee, in SWT
+	 * @return fee
 	 */
 	public double getFee() {
 		return fee;
 	}
 	/**
-	 * @return sequence number
+	 * Get sequence number
+	 * @return sequence
 	 */
 	public long getSequence() {
 		return sequence;

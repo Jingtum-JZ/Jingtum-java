@@ -2,7 +2,7 @@ package com.jingtum.model;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
+ * Order book class
  */
 public class OrderBook extends JingtumObject {	
 	JingtumCurrency price;
@@ -15,55 +15,64 @@ public class OrderBook extends JingtumObject {
 	Boolean passive;
 	Boolean sell;	
 	/**
-	 * @return current price
+	 * Get current price
+	 * @return price
 	 */
 	public JingtumCurrency getPrice() {
 		return price;
 	}
 	/**
-	 * @return actual amount get
+	 * Get actual amount get
+	 * @return taker_gets_funded
 	 */
 	public JingtumCurrency getTaker_gets_funded() {
 		return taker_gets_funded;
 	}
 	/**
-	 * @return total amount get
+	 * Get total amount get
+	 * @return taker_gets_total
 	 */
 	public JingtumCurrency getTaker_gets_total() {
 		return taker_gets_total;
 	}
 	/**
-	 * @return actual amount pay
+	 * Get actual amount pay
+	 * @return taker_pays_funded
 	 */
 	public JingtumCurrency getTaker_pays_funded() {
 		return taker_pays_funded;
 	}
 	/**
-	 * @return total amount pay
+	 * Get total amount pay
+	 * @return taker_pays_total
 	 */
 	public JingtumCurrency getTaker_pays_total() {
 		return taker_pays_total;
 	}
 	/**
-	 * @return order maker
+	 * Get order maker
+	 * @return order_maker
 	 */
 	public String getOrder_maker() {
 		return order_maker;
 	}
 	/**
-	 * @return transaction sequence
+	 * Get transaction sequence
+	 * @return sequence
 	 */
 	public long getSequence() {
 		return sequence;
 	}
 	/**
-	 * @return true if transaction is passive
+	 * Return true if transaction is passive
+	 * @return passive
 	 */
 	public Boolean getPassive() {
 		return passive;
 	}
 	/**
-	 * @return true if the order is sell
+	 * Return true if the order is sell
+	 * @return sell
 	 */
 	public Boolean getSell() {
 		return sell;

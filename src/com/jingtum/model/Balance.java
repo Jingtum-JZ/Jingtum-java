@@ -2,29 +2,28 @@ package com.jingtum.model;
 /**
  * @author jzhao
  * @version 1.0
- * @date 2015.10
  */
 public class Balance extends JingtumObject{
 	double value;
 	String currency;
 	String counterparty;	
 	/**
-	 * get balance value
-	 * @return 
+	 * Get balance value
+	 * @return value
 	 */
 	public double getValue() {
 		return value;
 	}	
 	/**
-	 * get balance currency unit
-	 * @return 
+	 * Get balance currency unit
+	 * @return currency
 	 */
 	public String getCurrency() {
 		return currency;
 	}
 	/**
-	 * get balance counterparty
-	 * @return 
+	 * Get balance counterparty
+	 * @return counterparty
 	 */
 	public String getCounterparty() {
 		return counterparty;

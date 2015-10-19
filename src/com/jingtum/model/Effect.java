@@ -1,8 +1,7 @@
 package com.jingtum.model;
 /**
- * effect class, additional information about payments or transactions
- * @author jzhao
- *
+ * Effect class, additional information about payments or transactions
+ * @author jzhao *
  */
 public class Effect extends JingtumObject{	
 	EffectType effect;
@@ -21,7 +20,10 @@ public class Effect extends JingtumObject{
 	JingtumCurrency to;
 	JingtumCurrency amount;		
 	/**
-	 * effect type 
+	 * Effect type:
+	 *  offer_funded, offer_partially_funded, offer_cancelled, offer_created,
+		offer_bought, trust_create_local, trust_create_remote, trust_change_local,
+		trust_change_remote, trust_change_balance, balance_change
 	 */
 	public enum EffectType {
 		offer_funded, offer_partially_funded, offer_cancelled, offer_created,
@@ -29,102 +31,106 @@ public class Effect extends JingtumObject{
 		trust_change_remote, trust_change_balance, balance_change
     }
 	/**
-	 * effect type
-	 * @return
+	 * Get effect type
+	 * @return effect
 	 */
 	public EffectType getEffect() {
 		return effect;
 	}
 	/**
-	 * order type, sell or buy
-	 * @return
+	 * Get order type, sell or buy
+	 * @return type
 	 */
 	public Order.OrderType getType() {
 		return type;
 	}
 	/**
-	 * for offer_funded, offer_cancelled, offer_created
-	 * @return
+	 * For offer_funded, offer_cancelled, offer_created, get "get" currency amount
+	 * @return gets
 	 */
 	public JingtumCurrency getGets() {
 		return gets;
 	}
 	/**
-	 * for offer_funded, offer_cancelled, offer_created
-	 * @return
+	 * For offer_funded, offer_cancelled, offer_created, get pays currency amount
+	 * @return pays
 	 */
 	public JingtumCurrency getPays() {
 		return pays;
 	}
+	/**
+	 * Get price
+	 * @return price
+	 */
 	public String getPrice() {
 		return price;
 	}
 	/**
-	 * for offer_partially_funded
+	 * For offer_partially_funded
 	 * @return true if remaining order cancelled
 	 */
 	public Boolean getCancelled() {
 		return cancelled;
 	}
 	/**
-	 * for offer_partially_funded, get remaining order amount
-	 * @return
+	 * For offer_partially_funded, get remaining order amount
+	 * @return remaining
 	 */
 	public JingtumCurrency getRemaining() {
 		return remaining;
 	}
 	/**
-	 * for offer_bought
-	 * @return
+	 * For offer_bought, get got amount
+	 * @return got
 	 */
 	public JingtumCurrency getGot() {
 		return got;
 	}
 	/**
-	 * for offer_bought
-	 * @return
+	 * For offer_bought, get paid amount
+	 * @return paid
 	 */
 	public JingtumCurrency getPaid() {
 		return paid;
 	}
 	/**
-	 * for trust_create_local and trust_change_local
-	 * @return counter party trusted
+	 * For trust_create_local and trust_change_local, get counterparty trusted
+	 * @return counterparty
 	 */
 	public String getCounterparty() {
 		return counterparty;
 	}
 	/**
-	 * for trust_create_local 
-	 * @return amount trusted
+	 * For trust_create_local, get amount trusted
+	 * @return limit
 	 */
 	public JingtumCurrency getLimit() {
 		return limit;
 	}
 	/**
-	 * for trust_change_local
-	 * @return changed trusted currency unit
+	 * For trust_change_local, get changed trusted currency unit
+	 * @return currency
 	 */
 	public String getCurrency() {
 		return currency;
 	}
 	/**
-	 * for trust_change_local, trust_change_remote
-	 * @return 
+	 * For trust_change_local, trust_change_remote
+	 * @return from
 	 */
 	public JingtumCurrency getFrom() {
 		return from;
 	}
 	/**
-	 * for trust_change_local, trust_change_remote
-	 * @return
+	 * For trust_change_local, trust_change_remote
+	 * @return to
 	 */
 	public JingtumCurrency getTo() {
 		return to;
 	}
 	/**
-	 * trust_change_balance, balance_change
-	 * @return
+	 * For trust_change_balance, balance_change
+	 * @return amount
 	 */
 	public JingtumCurrency getAmount() {
 		return amount;
