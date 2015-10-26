@@ -18,7 +18,7 @@ public class TransactionExample {
 		Transaction tran;
 		
 		System.out.println("---------获取所有transaction");
-		TransactionCollection tc = wallet.getTransactions("",true,Transaction.DirectionType.all); //参数为：支付交易的接收方地址，是否移除失败的交易历史，支付交易的方向，incoming或outgoing
+		TransactionCollection tc = wallet.getTransactions(null,true,Transaction.DirectionType.all); //参数为：支付交易的接收方地址，是否移除失败的交易历史，支付交易的方向，incoming或outgoing
 		Iterator it1 = tc.getData().iterator();
 		Integer i = 0;
 		while(it1.hasNext())

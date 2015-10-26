@@ -155,6 +155,7 @@ public abstract class APIResource extends JingtumObject {
         conn.setDoOutput(true);
         conn.setRequestMethod(method.toString());
         conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Content-Length", String.valueOf(query.getBytes().length));
 
         OutputStream output = null;
         

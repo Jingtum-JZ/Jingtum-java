@@ -7,6 +7,15 @@ public class Balance extends JingtumObject{
 	double value;
 	String currency;
 	String counterparty;	
+	double freezed;
+	
+	/**
+	 * Get freezed amount
+	 * @return freezed
+	 */
+	public double getFreezed() {
+		return freezed;
+	}
 	/**
 	 * Get balance value
 	 * @return value

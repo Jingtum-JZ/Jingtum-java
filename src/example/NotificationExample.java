@@ -12,8 +12,8 @@ public class NotificationExample {
 	public static void main(String[] args) throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException, ChannelException {
 		NotificationExample notificationExample = new NotificationExample();
 		
-		Wallet wallet = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf",""); //根据井通地址生成钱包
-		Notification noti = wallet.getNotification("AE85E50D4E9A77EF00A1FA2EE416DB3789F28381D267436E8A82493CC0791B62"); //根据hash值获取notification实例
+		Wallet wallet = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa",""); //根据井通地址生成钱包
+		Notification noti = wallet.getNotification("9A33D1850F84C51EFCA94B9AE84A15AD6BF691A60E859B190D5728C74A7D545B"); //根据hash值获取notification实例
 		System.out.println("---------获取 Notification");
 		
 		System.out.println(noti.getAccount()); //通知相关账号

@@ -38,6 +38,7 @@ public class WalletExample {
 			System.out.println(bl.getValue()); //金额
 			System.out.println(bl.getCurrency()); //货币单位
 			System.out.println(bl.getCounterparty()); //发行方
+			System.out.println(bl.getFreezed()); //冻结金额
 		}
 		
 		System.out.println("---------Wallet pay");

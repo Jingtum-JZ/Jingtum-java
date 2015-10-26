@@ -14,6 +14,7 @@ import com.jingtum.model.Wallet;
 import com.jingtum.model.BalanceCollection;
 import com.jingtum.model.EffectCollection;
 import com.jingtum.model.PaymentCollection;
+import com.jingtum.model.RelationCollection;
 import com.jingtum.model.TransactionCollection;
 import com.jingtum.model.TrustLineCollection;
 import com.jingtum.model.OrderCollection;
@@ -31,6 +32,7 @@ public class WalletDeserializer implements JsonDeserializer<Wallet> {
                 .registerTypeAdapter(TrustLineCollection.class, new TrustLineCollectionDeserializer())
                 .registerTypeAdapter(TransactionCollection.class, new TransactionCollectionDeserializer())
                 .registerTypeAdapter(EffectCollection.class, new EffectCollectionDeserializer())
+                .registerTypeAdapter(RelationCollection.class, new RelationCollectionDeserializer())
                 .create();
         Wallet wallet = gson.fromJson(json, Wallet.class);
         return wallet;

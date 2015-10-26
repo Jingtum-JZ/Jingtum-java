@@ -9,6 +9,14 @@ public class JingtumCurrency extends JingtumObject{
 	String currency;
 	String counterparty;
 	String issuer;	
+	double limit;	
+	/**
+	 * Limit, used in add relation
+	 * @param limit
+	 */
+	public void setLimit(double limit) {
+		this.limit = limit;
+	}
 	/**
 	 * Currency issuer, used in post payment
 	 * @param issuer 
@@ -64,6 +72,14 @@ public class JingtumCurrency extends JingtumObject{
 	 */
 	public String getIssuer() {
 		return issuer;
+	}
+	/**
+	 * Get limit
+	 * @return limit
+	 */
+	public double getLimit() {
+		// TODO Auto-generated method stub
+		return limit;
 	}
 }
 
