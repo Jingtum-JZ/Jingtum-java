@@ -11,7 +11,7 @@ public class JingtumCurrency extends JingtumObject{
 	String issuer;	
 	double limit;	
 	/**
-	 * Limit, used in add relation
+	 * Limit, used in adding relation
 	 * @param limit
 	 */
 	public void setLimit(double limit) {
@@ -78,7 +78,6 @@ public class JingtumCurrency extends JingtumObject{
 	 * @return limit
 	 */
 	public double getLimit() {
-		// TODO Auto-generated method stub
 		return limit;
 	}
 }

@@ -18,7 +18,6 @@ import com.jingtum.model.PostResult;
 public class WalletExample {
 	public static void main(String[] args) throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException, ChannelException {
 
-		WalletExample walletExample = new WalletExample(); 
 		System.out.println("---------创建 Wallet");
 		Wallet wallet = Wallet.create(); //创建新钱包，静态方法
 		System.out.println(wallet.getAddress()); //钱包地址
@@ -28,7 +27,7 @@ public class WalletExample {
 		Wallet wallet2 = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf",null);
 		BalanceCollection bc = Wallet.getBalance(wallet2.getAddress()); //静态方法，参数为钱包地址
 		Balance bl;
-		Iterator it = bc.getData().iterator();
+		Iterator<Balance> it = bc.getData().iterator();
 		Integer i = 0;
 		while(it.hasNext())
 		{			
@@ -76,7 +75,7 @@ public class WalletExample {
 		Wallet wallet5 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","");
 		PaymentCollection pc = wallet5.getPayments();
 		Payment pay;
-		Iterator it_2 = pc.getData().iterator();
+		Iterator<Payment> it_2 = pc.getData().iterator();
 		Integer j = 0;
 		while(it_2.hasNext())
 		{			

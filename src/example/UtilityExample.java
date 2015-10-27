@@ -9,7 +9,7 @@ import com.jingtum.util.Utility;
 
 public class UtilityExample {
 	public static void main(String[] args) throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException, ChannelException {
-		UtilityExample utilityExample = new UtilityExample();
+
 		Utility util = new Utility();
 		
 		System.out.println("---------获取 server连接信息");

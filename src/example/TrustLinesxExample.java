@@ -15,14 +15,12 @@ import com.jingtum.model.TrustLineCollection;
 public class TrustLinesxExample {
 	public static void main(String[] args) throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException, ChannelException {
 
-		TrustLinesxExample trustLinesxExample = new TrustLinesxExample();
-
 		System.out.println("---------获取授信");
 		Wallet wallet1 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","snqFcHzRe22JTM8j7iZVpQYzxEEbW"); //根据地址和密钥生成钱包，如只为获取全部授信，密钥可为空
 		TrustLineCollection tlc = wallet1.getTrustLine();
 		TrustLine tl1;
 		
-		Iterator it1 = tlc.getData().iterator();
+		Iterator<TrustLine> it1 = tlc.getData().iterator();
 		Integer i = 0;
 		while(it1.hasNext()){		
 			i++;

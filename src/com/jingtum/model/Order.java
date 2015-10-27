@@ -23,7 +23,7 @@ public class Order extends JingtumObject{
         sell, buy
     }	
 	/**
-	 * During to the jason structure returned from Http request, need a private order structure here
+	 * Based on the jason structure returned from Http request, need a private order structure here
 	 *
 	 */
 	private class MyOrder{

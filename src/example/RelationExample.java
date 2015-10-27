@@ -12,12 +12,11 @@ import com.jingtum.model.PostResult;
 import com.jingtum.model.Relation;
 import com.jingtum.model.Relation.RelationType;
 import com.jingtum.model.RelationCollection;
-import com.jingtum.model.Transaction;
 import com.jingtum.model.Wallet;
 
 public class RelationExample {
 	public static void main(String[] args) throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException, ChannelException {
-		RelationExample relationyExample = new RelationExample();
+
 		Wallet wallet = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","snqFcHzRe22JTM8j7iZVpQYzxEEbW");; //根据井通地址生成钱包
 		
 		System.out.println("---------增加relationship");
@@ -31,7 +30,7 @@ public class RelationExample {
 		System.out.println(pr.getSuccess());
 		System.out.println(pr.getState());
 		
-		System.out.println("---------移除relationship");
+/*		System.out.println("---------移除relationship");
 		JingtumCurrency currency = new JingtumCurrency();
 		currency.setIssuer("janxMdrWE2SUzTqRUtfycH4UGewMMeHa9f"); //Currency issuer
 		currency.setCurrency("CNY");
@@ -39,11 +38,11 @@ public class RelationExample {
 		System.out.println(pr.getFee());
 		System.out.println(pr.getHash());
 		System.out.println(pr.getSuccess());
-		System.out.println(pr.getState());
+		System.out.println(pr.getState());*/
 		
 		System.out.println("---------获取relationship");
 		RelationCollection rc = wallet.getRelations(RelationType.all, "jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf", null);//参数均为可选参数
-		Iterator it = rc.getData().iterator();
+		Iterator<Relation> it = rc.getData().iterator();
 		Integer i = 0;
 		Relation re;
 		while(it.hasNext())
@@ -62,7 +61,7 @@ public class RelationExample {
 		System.out.println("---------获取counterparty relationship");
 		Wallet wallet2 = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf",null);
 		RelationCollection rc2 = wallet2.getCounterpartyRelations(RelationType.all, null, null);//参数均为可选参数
-		Iterator it2 = rc2.getData().iterator();
+		Iterator<Relation> it2 = rc2.getData().iterator();
 		Integer j = 0;
 		Relation re2;
 		while(it2.hasNext())

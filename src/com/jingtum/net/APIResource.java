@@ -69,8 +69,11 @@ public abstract class APIResource extends JingtumObject {
      */
     protected static String classURL() {
         return String.format("%s/v1/%s", Jingtum.getApiBase(), "accounts");
-    }
-    
+    }    
+    /**
+     * @param param
+     * @return
+     */
     protected static String formatURL(String param){
     	return String.format("%s/v1/%s", Jingtum.getApiBase(), param);
     }    
@@ -102,13 +105,10 @@ public abstract class APIResource extends JingtumObject {
     		throws IOException {
         URL jingtumURL = null;
         jingtumURL = new URL(url);
-
         HttpsURLConnection conn = (HttpsURLConnection) jingtumURL.openConnection();
-
         conn.setConnectTimeout(30 * 1000);
         conn.setReadTimeout(80 * 1000);
         conn.setUseCaches(false);
-
         return conn;
     }    
     /**
@@ -137,7 +137,6 @@ public abstract class APIResource extends JingtumObject {
         String getURL = formatURL(url, query);
         java.net.HttpURLConnection conn = createJingtumConnection(getURL);
         conn.setRequestMethod("GET");
-
         return conn;
     }    
     /**
@@ -151,16 +150,12 @@ public abstract class APIResource extends JingtumObject {
     private static java.net.HttpURLConnection createPostDeleteConnection(
             String url, String query, APIResource.RequestMethod method) throws IOException, APIConnectionException {
         java.net.HttpURLConnection conn = createJingtumConnection(url);
-
         conn.setDoOutput(true);
         conn.setRequestMethod(method.toString());
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Content-Length", String.valueOf(query.getBytes().length));
-
-        OutputStream output = null;
-        
-        try {
-        	
+        OutputStream output = null;        
+        try {        	
         	output = conn.getOutputStream();
             output.write(query.getBytes());
             output.flush();
@@ -171,8 +166,7 @@ public abstract class APIResource extends JingtumObject {
             }
         }
         return conn;
-    }
-    
+    }    
     /**
     * Error class
     */
@@ -200,7 +194,8 @@ public abstract class APIResource extends JingtumObject {
     */
    private static String getResponseBody(InputStream responseStream)
            throws IOException {
-       String rBody = new Scanner(responseStream, CHARSET)
+       @SuppressWarnings("resource")
+	String rBody = new Scanner(responseStream, CHARSET)
                .useDelimiter("\\A")
                .next(); 
        responseStream.close();
@@ -235,14 +230,12 @@ public abstract class APIResource extends JingtumObject {
            // trigger the request
            int rCode = conn.getResponseCode();
            String rBody = null;
-
            if (rCode >= 200 && rCode < 300) {
                rBody = getResponseBody(conn.getInputStream());
            } else {
                rBody = getResponseBody(conn.getErrorStream());
            }
            return new JingtumResponse(rCode, rBody);
-
        } catch (IOException e) {
            throw new APIConnectionException(
                    String.format(
@@ -272,7 +265,6 @@ public abstract class APIResource extends JingtumObject {
     */
    protected static <T> T request(APIResource.RequestMethod method, String url, String params, Class<T> clazz) throws AuthenticationException,
            InvalidRequestException, APIConnectionException,ChannelException,APIException {
-
        JingtumResponse response;
        try {
            response = makeURLConnectionRequest(method, url, params);
@@ -298,8 +290,7 @@ public abstract class APIResource extends JingtumObject {
    private static void handleAPIError(String rBody, int rCode, String query)
            throws InvalidRequestException, AuthenticationException,
            APIException, ChannelException {
-	   APIResource.Error error;
-	   
+	   APIResource.Error error;	   
        switch (rCode) {
            case 400:
         	   error = GSON.fromJson(rBody,

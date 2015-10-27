@@ -8,9 +8,17 @@ import java.util.List;
  */
 public abstract class JingtumCollection<T> extends JingtumObject {
     List<T> data;
+	/**
+	 * Get list data
+	 * @return data
+	 */
 	public List<T> getData() {
         return data;
     }
+    /**
+     * Set list data
+     * @param data
+     */
     public void setData(List<T> data) {
         this.data = data;
     }

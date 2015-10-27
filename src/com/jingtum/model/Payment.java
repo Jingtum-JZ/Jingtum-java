@@ -2,6 +2,7 @@ package com.jingtum.model;
 /**
  * @author jzhao
  * @version 1.0
+ * Payment class
  */
 public class Payment extends JingtumObject{	
 	Boolean success;
@@ -15,7 +16,10 @@ public class Payment extends JingtumObject{
 	String counterparty;
 	JingtumCurrency amount;
 	EffectCollection effects;		
-	
+	/**
+	 * Server state:
+	 * validated or failed
+	 */
 	public enum StateType{
 		validated, failed
 	}

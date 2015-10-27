@@ -13,13 +13,13 @@ import com.jingtum.model.Wallet;
 
 public class TransactionExample {
 	public static void main(String[] args) throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException, ChannelException {
-		TransactionExample transactionExample = new TransactionExample();
+
 		Wallet wallet = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf",null);
 		Transaction tran;
 		
 		System.out.println("---------获取所有transaction");
-		TransactionCollection tc = wallet.getTransactions(null,true,Transaction.DirectionType.all); //参数为：支付交易的接收方地址，是否移除失败的交易历史，支付交易的方向，incoming或outgoing
-		Iterator it1 = tc.getData().iterator();
+		TransactionCollection tc = wallet.getTransactions(null,false,Transaction.DirectionType.all); //参数为：支付交易的接收方地址，是否移除失败的交易历史，支付交易的方向，incoming或outgoing
+		Iterator<Transaction> it1 = tc.getData().iterator();
 		Integer i = 0;
 		while(it1.hasNext())
 		{

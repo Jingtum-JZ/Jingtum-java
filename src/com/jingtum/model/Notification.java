@@ -2,6 +2,7 @@ package com.jingtum.model;
 /**
  * Notification class
  * @author jzhao
+ * @version 1.0
  */
 public class Notification extends JingtumObject {
 	String account;

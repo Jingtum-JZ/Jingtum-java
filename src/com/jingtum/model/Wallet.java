@@ -453,10 +453,8 @@ public class Wallet extends APIResource {
     	content.put("counterparty", counterParty);
     	if(amount !=null){
     		content.put("amount", amount);
-    	}
-    	
-    	String params = GSON.toJson(content); 
-    	
+    	}    	
+    	String params = GSON.toJson(content);     	
     	return request(RequestMethod.POST, formatURL(Relation.class,this.getAddress(),"?validated=" + validate.toString()), params, PostResult.class);
     } 
     /**
@@ -473,8 +471,7 @@ public class Wallet extends APIResource {
      * @throws ChannelException
      */
     public PostResult deleteRelation(Relation.RelationType type, String counterParty, JingtumCurrency currency, Boolean validate)throws AuthenticationException, InvalidRequestException,
-			APIConnectionException, APIException, ChannelException{
-    	
+			APIConnectionException, APIException, ChannelException{    	
     	HashMap<String, Object> content = new HashMap<String, Object>();
     	content.put("secret", this.getSecret());
     	content.put("type", type);
@@ -482,10 +479,8 @@ public class Wallet extends APIResource {
     	if(currency != null){
     		String myCurrency = currency.getCurrency()+"+"+currency.getIssuer();
     		content.put("currency", myCurrency);
-    	}
-    	
-    	String params = GSON.toJson(content); 
-    	
+    	}    	
+    	String params = GSON.toJson(content);     	
     	return request(RequestMethod.DELETE, formatURL(Relation.class,this.getAddress(),"?validated=" + validate.toString()), params, PostResult.class);
     } 
     /**
@@ -526,6 +521,18 @@ public class Wallet extends APIResource {
     	}
     	return request(RequestMethod.GET, formatURL(Relation.class,this.getAddress(),param), null, Wallet.class).getMyRelations();
     } 
+    /**
+     * Get relation collection using counter party as input
+     * @param type
+     * @param address
+     * @param currency
+     * @return RelationCollection
+     * @throws AuthenticationException
+     * @throws InvalidRequestException
+     * @throws APIConnectionException
+     * @throws APIException
+     * @throws ChannelException
+     */
     public RelationCollection getCounterpartyRelations(Relation.RelationType type, String address, JingtumCurrency currency)throws AuthenticationException, InvalidRequestException,
 			APIConnectionException, APIException, ChannelException{
     	String param = "";
@@ -551,6 +558,5 @@ public class Wallet extends APIResource {
     		}
     	}
     	return request(RequestMethod.GET, formatURL("counterparties/"+this.getAddress()+"/relations"+param), null, Wallet.class).getMyRelations();
-    } 
-    
+    }     
 }

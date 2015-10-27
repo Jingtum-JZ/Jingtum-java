@@ -19,8 +19,6 @@ import com.jingtum.model.PostResult;
 public class OrderExample {
 	public static void main(String[] args) throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException, ChannelException {
 
-		OrderExample orderExample = new OrderExample();
-
 		System.out.println("---------挂单");
 		Wallet wallet1 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","snqFcHzRe22JTM8j7iZVpQYzxEEbW"); //根据钱包地址和密钥生成钱包实例
 		JingtumCurrency pay = new JingtumCurrency(); //构建JingtumCurrency 实例
@@ -51,7 +49,7 @@ public class OrderExample {
 		Wallet wallet2 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","snqFcHzRe22JTM8j7iZVpQYzxEEbW"); 
 		OrderCollection oc = wallet2.getOrders(); //获取所有挂单
 		Order od_3;
-		Iterator it_3 = oc.getData().iterator();
+		Iterator<Order> it_3 = oc.getData().iterator();
 		Integer k = 0;
 		while(it_3.hasNext())
 		{			
@@ -115,7 +113,7 @@ public class OrderExample {
 		System.out.println(oBR.getSuccess());
 		System.out.println(oBR.getValidated());
 		OrderBookCollection asks = oBR.getAsks();
-		Iterator it_4 = asks.getData().iterator();
+		Iterator<OrderBook> it_4 = asks.getData().iterator();
 		Integer i = 0;
 		OrderBook ob;
 		while(it_4.hasNext())

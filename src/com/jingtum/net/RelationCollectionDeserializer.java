@@ -1,8 +1,6 @@
 package com.jingtum.net;
-
 import java.lang.reflect.Type;
 import java.util.List;
-
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,7 +11,10 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.jingtum.model.Relation;
 import com.jingtum.model.RelationCollection;
-
+/**
+ * @author jzhao
+ * @version 1.0
+ */
 public class RelationCollectionDeserializer implements JsonDeserializer<RelationCollection> {
     public RelationCollection deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {

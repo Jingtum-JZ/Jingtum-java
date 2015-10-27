@@ -1,5 +1,4 @@
 package com.jingtum.model;
-
 /**
  * @author jzhao
  * @version 1.0
@@ -45,6 +44,5 @@ public class Relation extends JingtumObject{
 	 */
 	public JingtumCurrency getAmount() {
 		return amount;
-	}
-	
+	}	
 }

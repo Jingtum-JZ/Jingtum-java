@@ -7,10 +7,9 @@ public class Balance extends JingtumObject{
 	double value;
 	String currency;
 	String counterparty;	
-	double freezed;
-	
+	double freezed;	
 	/**
-	 * Get freezed amount
+	 * Get freezed amount. Certain amount would be freezed after user post an order.
 	 * @return freezed
 	 */
 	public double getFreezed() {
@@ -24,14 +23,14 @@ public class Balance extends JingtumObject{
 		return value;
 	}	
 	/**
-	 * Get balance currency unit
+	 * Get balance currency unit. eg. SWT, CNY
 	 * @return currency
 	 */
 	public String getCurrency() {
 		return currency;
 	}
 	/**
-	 * Get balance counterparty
+	 * Get balance currency issuer
 	 * @return counterparty
 	 */
 	public String getCounterparty() {

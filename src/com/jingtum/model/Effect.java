@@ -2,6 +2,7 @@ package com.jingtum.model;
 /**
  * Effect class, additional information about payments or transactions
  * @author jzhao *
+ * @version 1.0
  */
 public class Effect extends JingtumObject{	
 	EffectType effect;
@@ -94,7 +95,7 @@ public class Effect extends JingtumObject{
 		return paid;
 	}
 	/**
-	 * For trust_create_local and trust_change_local, get counterparty trusted
+	 * For trust_create_local and trust_change_local, get counter party trusted
 	 * @return counterparty
 	 */
 	public String getCounterparty() {
