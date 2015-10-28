@@ -24,7 +24,7 @@ public class WalletExample {
 		System.out.println(wallet.getSecret()); //钱包密钥
 		
 		System.out.println("---------获取 Wallet balance");
-		Wallet wallet2 = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf",null);
+		Wallet wallet2 = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf");
 		BalanceCollection bc = Wallet.getBalance(wallet2.getAddress()); //静态方法，参数为钱包地址
 		Balance bl;
 		Iterator<Balance> it = bc.getData().iterator();
@@ -56,7 +56,7 @@ public class WalletExample {
 		System.out.println(payment.getFee()); //支付费用
 		
 		System.out.println("---------根据hash值或者资源号获取 Payment 信息");
-		Wallet wallet4 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","");
+		Wallet wallet4 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa");
 		Payment payment2 = wallet4.getPaymentByID("FBC53138F3178B365FDAF6F02E24E48485AEB47BA7345518BB8CF04781F599E0"); 
 		System.out.println(payment2.getHash());
 		System.out.println(payment2.getClient_resource_id());
@@ -72,7 +72,7 @@ public class WalletExample {
 		System.out.println(payment2.getAmount().getValue());
 		
 		System.out.println("---------获取全部 Payments 信息");
-		Wallet wallet5 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","");
+		Wallet wallet5 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa");
 		PaymentCollection pc = wallet5.getPayments();
 		Payment pay;
 		Iterator<Payment> it_2 = pc.getData().iterator();

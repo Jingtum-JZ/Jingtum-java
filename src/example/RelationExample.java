@@ -59,7 +59,7 @@ public class RelationExample {
 		}
 		
 		System.out.println("---------获取counterparty relationship");
-		Wallet wallet2 = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf",null);
+		Wallet wallet2 = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf");
 		RelationCollection rc2 = wallet2.getCounterpartyRelations(RelationType.all, null, null);//参数均为可选参数
 		Iterator<Relation> it2 = rc2.getData().iterator();
 		Integer j = 0;

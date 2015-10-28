@@ -14,7 +14,7 @@ import com.jingtum.model.Wallet;
 public class TransactionExample {
 	public static void main(String[] args) throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException, ChannelException {
 
-		Wallet wallet = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf",null);
+		Wallet wallet = new Wallet("jMhLAPaNFo288PNo5HMC37kg6ULjJg8vPf");
 		Transaction tran;
 		
 		System.out.println("---------获取所有transaction");

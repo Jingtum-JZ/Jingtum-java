@@ -67,14 +67,14 @@ public class Notification extends JingtumObject {
 	 * Get previous transaction URL
 	 * @return previous_hash
 	 */
-	public String getPrevious_hash() {
+	public String getPreviousHash() {
 		return previous_hash;
 	}
 	/**
 	 * Get next transaction URL
 	 * @return next_hash
 	 */
-	public String getNext_hash() {
+	public String getNextHash() {
 		return next_hash;
 	}
 }

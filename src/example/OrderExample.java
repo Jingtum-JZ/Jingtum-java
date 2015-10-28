@@ -98,7 +98,7 @@ public class OrderExample {
 		System.out.println(od_5.getSequence());	//交易序列号
 		
 		System.out.println("---------获取Orderbook");
-		Wallet wallet4 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa","");
+		Wallet wallet4 = new Wallet("js4UaG1pjyCEi9f867QHJbWwD3eo6C5xsa");
 		JingtumCurrency base = new JingtumCurrency(); //基准货币（currency+counterparty）
 		base.setCurrency("CNY");
 		base.setCounterparty("jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS");

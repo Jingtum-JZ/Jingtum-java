@@ -21,8 +21,8 @@ public class NotificationExample {
 		System.out.println(noti.getResult()); //交易结果
 		System.out.println(noti.getHash()); //交易hash值
 		System.out.println(noti.getDate()); //交易时间，UNIXTIME
-		System.out.println(noti.getPrevious_hash()); //前一个交易的URL
-		System.out.println(noti.getNext_hash()); //后一个交易的URL
+		System.out.println(noti.getPreviousHash()); //前一个交易的URL
+		System.out.println(noti.getNextHash()); //后一个交易的URL
 		
 		System.out.println("---------end");
 	}

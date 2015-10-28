@@ -93,6 +93,14 @@ public class Wallet extends APIResource {
 		this.wallet.secret = secret;
 	}	
 	/**
+	 * Create Wallet instance with address only
+	 * @param address
+	 */
+	public Wallet (String address){
+		wallet = new Mywallet();
+		this.wallet.address = address;
+	}
+	/**
 	 * private wallet class
 	 */
 	private class Mywallet {
